@@ -1,12 +1,14 @@
 package com.unh.washbuddy_android.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.unh.washbuddy_android.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -33,6 +35,16 @@ private var _binding: FragmentHomeBinding? = null
     }
     return root
   }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnNewOrder.setOnClickListener {
+            val action = HomeFragmentDirections.actionNavigationHomeToNewOrder1Fragment()
+            findNavController().navigate(action)
+        }
+    }
 
 override fun onDestroyView() {
         super.onDestroyView()
