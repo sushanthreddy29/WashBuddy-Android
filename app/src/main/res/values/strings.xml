@@ -3,6 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_orders">Orders</string>
     <string name="title_account">Account</string>
+    <string name="NewOrder">New Order</string>
+    <string name="NewLaundry">Do My Laundry</string>
+    <string name="Header1">WashNFold</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
