@@ -1,44 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.NewOrder1Fragment">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/EnterDetails"
+        android:text="Enter Details for Your Order"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Line2"
+        android:text="Choose your Address and confirm your details"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="italic"
+        android:layout_below="@id/EnterDetails"
+        />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="62dp">
+    <TextView
+        android:id="@+id/EnterAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Line2"
+        android:layout_marginTop="25dp"
+        android:text="Enter Address *"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold|italic" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/EnterAddress"
+        android:layout_marginTop="10dp"
+        android:id="@+id/EditEnterAddress"
+        android:hint="Enter your Address"
+        android:inputType="text"
+        android:ems="21"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnHelp"
-            android:layout_width="44dp"
-            android:layout_height="67dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="top|right"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@android:color/white"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|right"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="30dp"
-            android:elevation="20dp"
-            />
+    <TextView
+        android:id="@+id/PickupTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/EditEnterAddress"
+        android:layout_marginTop="25dp"
+        android:text="Pickup Time *"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold|italic" />
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/PickupTime"
+        android:id="@+id/EditPickupTime"
+        android:layout_marginTop="10dp"
+        android:hint="Enter your Pickup Time"
+        android:inputType="text"
+        android:ems="21"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        />
 
+    <TextView
+        android:id="@+id/DetergentType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/EditPickupTime"
+        android:layout_marginTop="25dp"
+        android:text="Detergent Type *"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold|italic" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/DetergentType"
+        android:id="@+id/EditDetergentType"
+        android:layout_marginTop="10dp"
+        android:hint="Enter your Detergent Type "
+        android:inputType="text"
+        android:ems="21"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/SelectLaundromat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/EditDetergentType"
+        android:layout_marginTop="25dp"
+        android:text="Select Laundromat *"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold|italic" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/SelectLaundromat"
+        android:id="@+id/EditSelectLaundromat"
+        android:layout_marginTop="10dp"
+        android:hint="Select your Laundromat "
+        android:inputType="text"
+        android:ems="21"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        />
+
+    <Button
+        android:id="@+id/btnContinue1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/EditSelectLaundromat"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:text="CONTINUE"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+</RelativeLayout>

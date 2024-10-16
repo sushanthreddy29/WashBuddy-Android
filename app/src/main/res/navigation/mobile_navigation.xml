@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_newOrder1Fragment_to_newOrder2Fragment"
             app:destination="@id/newOrder2Fragment" />
+        <action
+            android:id="@+id/action_newOrder1Fragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
     <fragment
         android:id="@+id/newOrder2Fragment"

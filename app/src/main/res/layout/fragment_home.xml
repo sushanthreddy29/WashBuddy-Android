@@ -31,7 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:text="@string/Header1"
             android:textColor="@color/teal_200"
             android:textSize="40dp"
@@ -53,7 +52,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="top|right"
-            android:layout_marginTop="25dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@android:color/white"
             />
@@ -61,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:elevation="20dp"
             app:srcCompat="@drawable/baseline_question_mark_24" />
