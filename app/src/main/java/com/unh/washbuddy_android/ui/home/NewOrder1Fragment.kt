@@ -10,10 +10,11 @@ import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.unh.washbuddy_android.R
 import com.unh.washbuddy_android.databinding.FragmentHomeBinding
+import com.unh.washbuddy_android.databinding.FragmentNewOrder1Binding
 
 
 class NewOrder1Fragment : Fragment() {
-
+   
     companion object {
         fun newInstance() = NewOrder1Fragment()
     }
