@@ -15,6 +15,7 @@
             app:destination="@id/newOrder1Fragment" />
     </fragment>
 
+
     <fragment
         android:id="@+id/navigation_orders"
         android:name="com.unh.washbuddy_android.ui.orders.OrdersFragment"
