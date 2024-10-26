@@ -29,7 +29,7 @@
         android:padding="20dp"
         android:drawableLeft="@drawable/baseline_email_24"
         android:inputType="text"
-        android:text="Email Address"
+        android:hint="Email Address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
