@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/Header1"
-            android:textColor="@color/teal_200"
+            android:textColor="@color/design_default_color_secondary_variant"
             android:textSize="40dp"
             android:textStyle="bold|italic" />
 
