@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <TextView
-        android:id="@+id/frgtpassword"
+        android:id="@+id/forgotpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -79,14 +79,14 @@
 
 
     <TextView
-        android:id="@+id/createaccount"
+        android:id="@+id/newuser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Create Account"
+        android:text="New User? Register here."
         android:drawableRight="@drawable/baseline_arrow_forward_24"
         android:clickable="true"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:focusable="true"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"

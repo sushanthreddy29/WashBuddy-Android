@@ -3,6 +3,7 @@ package com.unh.washbuddy_android
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -37,36 +38,61 @@ class signup : AppCompatActivity() {
     }
 
     private fun writeUserDetailsToFirebase(){
-        val firstname = binding.firstName
-        val lastname = binding.lastName
-        val username = binding.username
-        val email = binding.email
-        val password = binding.password
-        val confirmpassword = binding.confirmpassword
+        val firstname = binding.firstName.text.toString()
+        val lastname = binding.lastName.text.toString()
+        val username = binding.username.text.toString()
+        val email = binding.email.text.toString()
+        val password = binding.password.text.toString()
+        val confirmpassword = binding.confirmpassword.text.toString()
 
-        Log.d(TAG,"Variables: $firstname $lastname $username $email $password ")
+        if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
+            Toast.makeText(this, "Please enter all the fields", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        val UserCredentials = hashMapOf(
-            "Firstname" to firstname.text.toString(),
-            "Lastname" to lastname.text.toString(),
-            "Username" to username.text.toString(),
-            "email" to email.text.toString(),
-            "password" to password.text.toString()
-        )
+        if (password != confirmpassword) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            Toast.makeText(this, "Enter valid email", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         db.collection("UserCredentials")
-            .add(UserCredentials)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG,"DocumentSnapshot written successfully with ID: ${documentReference.id}")
+            .whereEqualTo("email",email)
+            .get()
+            .addOnSuccessListener { usercredentials ->
+                if(!usercredentials.isEmpty)
+                {
+                    Toast.makeText(this, "Email already exist, try login.", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    val UserCredentials = hashMapOf(
+                        "Firstname" to firstname,
+                        "Lastname" to lastname,
+                        "Username" to username,
+                        "email" to email,
+                        "password" to password
+                    )
+                    db.collection("UserCredentials")
+                        .add(UserCredentials)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d(TAG,"DocumentSnapshot written successfully with ID: ${documentReference.id}")
+                            Toast.makeText(this, "Account Created Successfully.", Toast.LENGTH_SHORT).show()
+
+                        }
+                        .addOnFailureListener{ exception ->
+                            Log.w(TAG, "Error adding document", exception)
+                        }
+                    binding.firstName.setText("")
+                    binding.lastName.setText("")
+                    binding.username.setText("")
+                    binding.email.setText("")
+                    binding.password.setText("")
+                    binding.confirmpassword.setText("")
+                }
             }
-            .addOnFailureListener{ exception ->
-                Log.w(TAG, "Error adding document", exception)
-            }
-        firstname.setText("")
-        lastname.setText("")
-        username.setText("")
-        email.setText("")
-        password.setText("")
-        confirmpassword.setText("")
     }
 }
