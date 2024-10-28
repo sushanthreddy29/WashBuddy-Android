@@ -74,7 +74,6 @@ class signin : AppCompatActivity() {
 
                     if(password == userpassword)
                     {
-                        Toast.makeText(this, "Logged in Successfully.", Toast.LENGTH_SHORT).show()
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)

@@ -45,7 +45,7 @@ class NewOrder1Fragment : Fragment() {
         _binding = FragmentNewOrder1Binding.inflate(inflater, container, false)
         binding.btncontinue2.setOnClickListener {
             if (binding.enteraddress.text.toString().isEmpty() || binding.enterpickuptime.text.toString().isEmpty() || binding.enterlaundromat.text.toString().isEmpty() || binding.enterdetergent.text.toString().isEmpty() || binding.enterdelivery.text.toString().isEmpty() || binding.enterextras.text.toString().isEmpty()) {
-
+                Toast.makeText(requireContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show()
             } else {
                 ordersList.add(
                     OrdersData(
@@ -91,7 +91,8 @@ class NewOrder1Fragment : Fragment() {
 
 
         if (binding.enteraddress.text.toString().isEmpty() || binding.enterpickuptime.text.toString().isEmpty() || binding.enterlaundromat.text.toString().isEmpty() || binding.enterdetergent.text.toString().isEmpty() || binding.enterdelivery.text.toString().isEmpty() || binding.enterextras.text.toString().isEmpty()) {
-
+            Toast.makeText(requireContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show()
+            return
         }
         else{
             db.collection("/UserCredentials/0UlkXB4hIqc5uGRU2lHw/LaundryOrders")
