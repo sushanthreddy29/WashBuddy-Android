@@ -75,15 +75,7 @@ class NewOrder1Fragment : Fragment() {
     private fun saveLaundryDetailsToFirebase(index: Int){
         val db = Firebase.firestore
 
-        val address = binding.enteraddress.text.toString()
-        val pickuptime = binding.enterpickuptime.text.toString()
-        val laundromat = binding.enterlaundromat.text.toString()
-        val detergent = binding.enterdetergent.text.toString()
-        val speed = binding.enterdelivery.text.toString()
-        val smallbag = binding.smallbag.text.toString()
-        val regularbag = binding.regularbag.text.toString()
-        val largebag = binding.largebag.text.toString()
-        val extras = binding.enterextras.text.toString()
+
 
         val newOrder = hashMapOf(
             "address" to ordersList[index].address,
