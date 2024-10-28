@@ -33,24 +33,7 @@
         android:label="fragment_new_order1"
         tools:layout="@layout/fragment_new_order1" >
         <action
-            android:id="@+id/action_newOrder1Fragment_to_newOrder2Fragment"
-            app:destination="@id/newOrder2Fragment" />
-        <action
             android:id="@+id/action_newOrder1Fragment_to_navigation_home"
             app:destination="@id/navigation_home" />
     </fragment>
-    <fragment
-        android:id="@+id/newOrder2Fragment"
-        android:name="com.unh.washbuddy_android.ui.home.NewOrder2Fragment"
-        android:label="fragment_new_order2"
-        tools:layout="@layout/fragment_new_order2" >
-        <action
-            android:id="@+id/action_newOrder2Fragment_to_newOrder3Fragment"
-            app:destination="@id/newOrder3Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/newOrder3Fragment"
-        android:name="com.unh.washbuddy_android.ui.home.NewOrder3Fragment"
-        android:label="fragment_new_order3"
-        tools:layout="@layout/fragment_new_order3" />
 </navigation>

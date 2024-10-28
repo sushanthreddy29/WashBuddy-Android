@@ -40,7 +40,7 @@ class signup : AppCompatActivity() {
     private fun writeUserDetailsToFirebase(){
         val firstname = binding.firstName.text.toString()
         val lastname = binding.lastName.text.toString()
-        val username = binding.username.text.toString()
+        val username = binding.userName.text.toString()
         val email = binding.email.text.toString()
         val password = binding.password.text.toString()
         val confirmpassword = binding.confirmpassword.text.toString()
@@ -88,7 +88,7 @@ class signup : AppCompatActivity() {
                         }
                     binding.firstName.setText("")
                     binding.lastName.setText("")
-                    binding.username.setText("")
+                    binding.userName.setText("")
                     binding.email.setText("")
                     binding.password.setText("")
                     binding.confirmpassword.setText("")
