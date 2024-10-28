@@ -14,6 +14,7 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity2 : AppCompatActivity() {
 
+
     private lateinit var btnsignup: Button
     private lateinit var btnsignin: Button
 
