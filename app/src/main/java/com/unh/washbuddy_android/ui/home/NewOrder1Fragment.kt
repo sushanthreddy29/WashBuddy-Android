@@ -20,7 +20,7 @@ import com.unh.washbuddy_android.ui.orders.ordersList
 
 
 class NewOrder1Fragment : Fragment() {
-   
+
     companion object {
         fun newInstance() = NewOrder1Fragment()
     }
@@ -44,8 +44,18 @@ class NewOrder1Fragment : Fragment() {
     ): View {
         _binding = FragmentNewOrder1Binding.inflate(inflater, container, false)
         binding.btncontinue2.setOnClickListener {
-            if (binding.enteraddress.text.toString().isEmpty() || binding.enterpickuptime.text.toString().isEmpty() || binding.enterlaundromat.text.toString().isEmpty() || binding.enterdetergent.text.toString().isEmpty() || binding.enterdelivery.text.toString().isEmpty() || binding.enterextras.text.toString().isEmpty()) {
-                Toast.makeText(requireContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show()
+            if (binding.enteraddress.text.toString()
+                    .isEmpty() || binding.enterpickuptime.text.toString()
+                    .isEmpty() || binding.enterlaundromat.text.toString()
+                    .isEmpty() || binding.enterdetergent.text.toString()
+                    .isEmpty() || binding.enterdelivery.text.toString()
+                    .isEmpty() || binding.smallbag.text.toString()
+                    .isEmpty() || binding.regularbag.text.toString()
+                    .isEmpty() || binding.largebag.text.toString()
+                    .isEmpty() || binding.enterextras.text.toString().isEmpty()
+            ) {
+                Toast.makeText(requireContext(), "Please enter all the fields", Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 ordersList.add(
                     OrdersData(
@@ -72,9 +82,8 @@ class NewOrder1Fragment : Fragment() {
         return binding.root
     }
 
-    private fun saveLaundryDetailsToFirebase(index: Int){
+    private fun saveLaundryDetailsToFirebase(index: Int) {
         val db = Firebase.firestore
-
 
 
         val newOrder = hashMapOf(
@@ -89,23 +98,16 @@ class NewOrder1Fragment : Fragment() {
             "extras" to ordersList[index].extras,
         )
 
-
-        if (binding.enteraddress.text.toString().isEmpty() || binding.enterpickuptime.text.toString().isEmpty() || binding.enterlaundromat.text.toString().isEmpty() || binding.enterdetergent.text.toString().isEmpty() || binding.enterdelivery.text.toString().isEmpty() || binding.enterextras.text.toString().isEmpty()) {
-            Toast.makeText(requireContext(), "Please enter all the fields", Toast.LENGTH_SHORT).show()
-            return
-        }
-        else{
-            db.collection("/UserCredentials/0UlkXB4hIqc5uGRU2lHw/LaundryOrders")
-                .add(newOrder)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG,"DocumentSnapshot written successfully with ID: ${documentReference.id}")
-                    ordersList[index].id = documentReference.id
-                }
-                .addOnFailureListener{ exception ->
-                    Log.w(TAG,"Error adding document", exception)
-                }
-        }
-
-
+        db.collection("/UserCredentials/0UlkXB4hIqc5uGRU2lHw/LaundryOrders")
+            .add(newOrder)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot written successfully with ID: ${documentReference.id}")
+                ordersList[index].id = documentReference.id
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error adding document", exception)
+            }
     }
+
+
 }

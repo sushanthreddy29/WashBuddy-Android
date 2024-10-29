@@ -26,18 +26,18 @@ class signup : AppCompatActivity() {
         setContentView(binding.root)
 
         val backtosignin = findViewById<TextView>(R.id.backtosignin)
-        backtosignin.setOnClickListener{
-            val intent = Intent(this,signin::class.java)
+        backtosignin.setOnClickListener {
+            val intent = Intent(this, signin::class.java)
             startActivity(intent)
         }
 
-        binding.signup.setOnClickListener{
+        binding.signup.setOnClickListener {
             writeUserDetailsToFirebase()
         }
 
     }
 
-    private fun writeUserDetailsToFirebase(){
+    private fun writeUserDetailsToFirebase() {
         val firstname = binding.firstName.text.toString()
         val lastname = binding.lastName.text.toString()
         val username = binding.userName.text.toString()
@@ -54,21 +54,21 @@ class signup : AppCompatActivity() {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
             return
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-        {
-            Toast.makeText(this, "Enter valid email", Toast.LENGTH_SHORT).show()
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Enter valid email address", Toast.LENGTH_SHORT).show()
             return
         }
 
+
         db.collection("UserCredentials")
-            .whereEqualTo("email",email)
+            .whereEqualTo("email", email)
+            .whereEqualTo("Username", username)
             .get()
             .addOnSuccessListener { usercredentials ->
-                if(!usercredentials.isEmpty)
-                {
-                    Toast.makeText(this, "Email already exist, try login.", Toast.LENGTH_SHORT).show()
-                }
-                else{
+                if (!usercredentials.isEmpty) {
+                    Toast.makeText(this, "Email or Username already exist, try login.", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
                     val UserCredentials = hashMapOf(
                         "Firstname" to firstname,
                         "Lastname" to lastname,
@@ -79,11 +79,12 @@ class signup : AppCompatActivity() {
                     db.collection("UserCredentials")
                         .add(UserCredentials)
                         .addOnSuccessListener { documentReference ->
-                            Log.d(TAG,"DocumentSnapshot written successfully with ID: ${documentReference.id}")
-                            Toast.makeText(this, "Account Created Successfully.", Toast.LENGTH_SHORT).show()
-
+                            Log.d(
+                                TAG,
+                                "DocumentSnapshot written successfully with ID: ${documentReference.id}"
+                            )
                         }
-                        .addOnFailureListener{ exception ->
+                        .addOnFailureListener { exception ->
                             Log.w(TAG, "Error adding document", exception)
                         }
                     binding.firstName.setText("")

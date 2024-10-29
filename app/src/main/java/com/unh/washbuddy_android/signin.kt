@@ -56,7 +56,7 @@ class signin : AppCompatActivity() {
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
-            Toast.makeText(this, "Enter valid email", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Enter valid email address", Toast.LENGTH_SHORT).show()
             return
         }
 
