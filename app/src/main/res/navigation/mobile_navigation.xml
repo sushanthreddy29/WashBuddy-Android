@@ -20,7 +20,11 @@
         android:id="@+id/navigation_orders"
         android:name="com.unh.washbuddy_android.ui.orders.OrdersFragment"
         android:label="@string/title_orders"
-        tools:layout="@layout/fragment_orders" />
+        tools:layout="@layout/fragment_orders" >
+        <action
+            android:id="@+id/action_navigation_orders_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_account"
@@ -32,6 +36,9 @@
         android:name="com.unh.washbuddy_android.ui.home.NewOrder1Fragment"
         android:label="fragment_new_order1"
         tools:layout="@layout/fragment_new_order1" >
+        <action
+            android:id="@+id/action_newOrder1Fragment_to_navigation_orders"
+            app:destination="@id/navigation_orders" />
         <action
             android:id="@+id/action_newOrder1Fragment_to_navigation_home"
             app:destination="@id/navigation_home" />

@@ -45,21 +45,25 @@ class signup : AppCompatActivity() {
         val password = binding.password.text.toString()
         val confirmpassword = binding.confirmpassword.text.toString()
 
+        // checking user entered all fields
         if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
             Toast.makeText(this, "Please enter all the fields", Toast.LENGTH_SHORT).show()
             return
         }
-
+        
+        // checking wheather password and confirmpassword is same
         if (password != confirmpassword) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
             return
         }
+
+        // email valid or not
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Enter valid email address", Toast.LENGTH_SHORT).show()
             return
         }
 
-
+        // checking database if email or username already exists
         db.collection("UserCredentials")
             .whereEqualTo("email", email)
             .whereEqualTo("Username", username)

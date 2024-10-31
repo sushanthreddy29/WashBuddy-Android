@@ -49,17 +49,20 @@ class signin : AppCompatActivity() {
         val email = binding.email.text.toString()
         val userpassword = binding.password.text.toString()
 
+        // Checking wheather email and username is empty or not before clicking button
         if(email.isEmpty() || userpassword.isEmpty()) {
             Toast.makeText(this, "Please enter all the fields", Toast.LENGTH_SHORT).show()
             return
         }
 
+        // Checking email is valid or not
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
             Toast.makeText(this, "Enter valid email address", Toast.LENGTH_SHORT).show()
             return
         }
 
+        // checking given email equals to database email
         db.collection("UserCredentials")
             .whereEqualTo("email",email)
             .get()
@@ -83,7 +86,7 @@ class signin : AppCompatActivity() {
 
                     }
                     else{
-                        Toast.makeText(this, "Email or password is Incorrect.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Email or password is incorrect.", Toast.LENGTH_SHORT).show()
                     }
 
                 }
