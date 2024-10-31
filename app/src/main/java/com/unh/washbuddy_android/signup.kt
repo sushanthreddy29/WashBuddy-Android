@@ -50,7 +50,7 @@ class signup : AppCompatActivity() {
             Toast.makeText(this, "Please enter all the fields", Toast.LENGTH_SHORT).show()
             return
         }
-        
+
         // checking wheather password and confirmpassword is same
         if (password != confirmpassword) {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
@@ -63,41 +63,54 @@ class signup : AppCompatActivity() {
             return
         }
 
-        // checking database if email or username already exists
         db.collection("UserCredentials")
-            .whereEqualTo("email", email)
             .whereEqualTo("Username", username)
             .get()
             .addOnSuccessListener { usercredentials ->
                 if (!usercredentials.isEmpty) {
-                    Toast.makeText(this, "Email or Username already exist, try login.", Toast.LENGTH_SHORT)
+                    Toast.makeText(this, "Username already exist, try login.", Toast.LENGTH_SHORT)
                         .show()
                 } else {
-                    val UserCredentials = hashMapOf(
-                        "Firstname" to firstname,
-                        "Lastname" to lastname,
-                        "Username" to username,
-                        "email" to email,
-                        "password" to password
-                    )
                     db.collection("UserCredentials")
-                        .add(UserCredentials)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d(
-                                TAG,
-                                "DocumentSnapshot written successfully with ID: ${documentReference.id}"
-                            )
+                        .whereEqualTo("email", email)
+                        .get()
+                        .addOnSuccessListener { usercredentials ->
+                            if (!usercredentials.isEmpty) {
+                                Toast.makeText(
+                                    this,
+                                    "Email already exist, try login.",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            } else {
+                                val UserCredentials = hashMapOf(
+                                    "Firstname" to firstname,
+                                    "Lastname" to lastname,
+                                    "Username" to username,
+                                    "email" to email,
+                                    "password" to password
+                                )
+                                db.collection("UserCredentials")
+                                    .add(UserCredentials)
+                                    .addOnSuccessListener { documentReference ->
+                                        Log.d(
+                                            TAG,
+                                            "DocumentSnapshot written successfully with ID: ${documentReference.id}"
+                                        )
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Log.w(TAG, "Error adding document", exception)
+                                    }
+                                binding.firstName.setText("")
+                                binding.lastName.setText("")
+                                binding.userName.setText("")
+                                binding.email.setText("")
+                                binding.password.setText("")
+                                binding.confirmpassword.setText("")
+                            }
                         }
-                        .addOnFailureListener { exception ->
-                            Log.w(TAG, "Error adding document", exception)
-                        }
-                    binding.firstName.setText("")
-                    binding.lastName.setText("")
-                    binding.userName.setText("")
-                    binding.email.setText("")
-                    binding.password.setText("")
-                    binding.confirmpassword.setText("")
                 }
             }
+
     }
 }

@@ -86,7 +86,7 @@ class signin : AppCompatActivity() {
 
                     }
                     else{
-                        Toast.makeText(this, "Email or password is incorrect.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Password is incorrect.", Toast.LENGTH_SHORT).show()
                     }
 
                 }
