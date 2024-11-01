@@ -16,7 +16,6 @@ import com.unh.washbuddy_android.R
 import com.unh.washbuddy_android.databinding.FragmentHomeBinding
 import com.unh.washbuddy_android.databinding.FragmentNewOrder1Binding
 import com.unh.washbuddy_android.ui.orders.OrdersData
-import com.unh.washbuddy_android.ui.orders.ordersList
 
 
 class NewOrder1Fragment : Fragment() {
@@ -57,24 +56,10 @@ class NewOrder1Fragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter all the fields", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                ordersList.add(
-                    OrdersData(
-                        "",
-                        binding.enteraddress.text.toString(),
-                        binding.enterpickuptime.text.toString(),
-                        binding.enterlaundromat.text.toString(),
-                        binding.enterdetergent.text.toString(),
-                        binding.enterdelivery.text.toString(),
-                        binding.smallbag.text.toString(),
-                        binding.smallbag.text.toString(),
-                        binding.smallbag.text.toString(),
-                        binding.enterextras.text.toString()
-                    )
-                )
                 val action = NewOrder1FragmentDirections.actionNewOrder1FragmentToNavigationHome()
                 findNavController().navigate(action)
 
-                saveLaundryDetailsToFirebase(ordersList.count() - 1)
+                saveLaundryDetailsToFirebase()
             }
         }
 
@@ -82,27 +67,36 @@ class NewOrder1Fragment : Fragment() {
         return binding.root
     }
 
-    private fun saveLaundryDetailsToFirebase(index: Int) {
+    private fun saveLaundryDetailsToFirebase() {
         val db = Firebase.firestore
+
+        val address = binding.enteraddress.text.toString()
+        val pickuptime = binding.enterpickuptime.text.toString()
+        val selectlaundromat = binding.enterlaundromat.text.toString()
+        val detergent = binding.enterdetergent.text.toString()
+        val speed = binding.enterdelivery.text.toString()
+        val smallbag = binding.smallbag.text.toString()
+        val regularbag = binding.regularbag.text.toString()
+        val largebag = binding.largebag.text.toString()
+        val extras = binding.enterextras.text.toString()
 
 
         val newOrder = hashMapOf(
-            "address" to ordersList[index].address,
-            "pickuptime" to ordersList[index].pickupTime,
-            "laundromat" to ordersList[index].selectLaundromat,
-            "detergent" to ordersList[index].detergentType,
-            "speed" to ordersList[index].speed,
-            "smallbag" to ordersList[index].smallbag,
-            "regularbag" to ordersList[index].regularbag,
-            "largebag" to ordersList[index].largebag,
-            "extras" to ordersList[index].extras,
+            "address" to address,
+            "pickuptime" to pickuptime,
+            "laundromat" to selectlaundromat,
+            "detergent" to detergent,
+            "speed" to speed,
+            "smallbag" to smallbag,
+            "regularbag" to regularbag,
+            "largebag" to largebag,
+            "extras" to extras,
         )
 
-        db.collection("/UserCredentials/0UlkXB4hIqc5uGRU2lHw/LaundryOrders")
+        db.collection("LaundryOrders")
             .add(newOrder)
             .addOnSuccessListener { documentReference ->
                 Log.d(TAG, "DocumentSnapshot written successfully with ID: ${documentReference.id}")
-                ordersList[index].id = documentReference.id
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error adding document", exception)

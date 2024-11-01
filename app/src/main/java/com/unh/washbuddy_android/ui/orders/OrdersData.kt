@@ -12,5 +12,3 @@ data class OrdersData(
     var largebag: String = "",
     var extras: String = ""
 )
-
-val ordersList: ArrayList<OrdersData> = arrayListOf()
