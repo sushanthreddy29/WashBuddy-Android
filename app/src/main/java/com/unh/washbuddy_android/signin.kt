@@ -79,6 +79,7 @@ class signin : AppCompatActivity() {
                     {
 
                         val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("email", email)
                         startActivity(intent)
 
                         binding.email.setText("")

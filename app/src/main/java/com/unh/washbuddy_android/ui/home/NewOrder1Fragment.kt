@@ -12,6 +12,7 @@ import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.unh.washbuddy_android.AppData
 import com.unh.washbuddy_android.R
 import com.unh.washbuddy_android.databinding.FragmentHomeBinding
 import com.unh.washbuddy_android.databinding.FragmentNewOrder1Binding
@@ -70,6 +71,7 @@ class NewOrder1Fragment : Fragment() {
     private fun saveLaundryDetailsToFirebase() {
         val db = Firebase.firestore
 
+        val email = AppData.email
         val address = binding.enteraddress.text.toString()
         val pickuptime = binding.enterpickuptime.text.toString()
         val selectlaundromat = binding.enterlaundromat.text.toString()
@@ -82,6 +84,7 @@ class NewOrder1Fragment : Fragment() {
 
 
         val newOrder = hashMapOf(
+            "email" to email,
             "address" to address,
             "pickuptime" to pickuptime,
             "laundromat" to selectlaundromat,

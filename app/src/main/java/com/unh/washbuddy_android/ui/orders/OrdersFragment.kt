@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.unh.washbuddy_android.AppData
 import com.unh.washbuddy_android.databinding.FragmentOrdersBinding
 
 class OrdersFragment : Fragment() {
@@ -55,6 +56,7 @@ class OrdersFragment : Fragment() {
 
     private fun getDetailsFromDatabase() {
 
+        val email = AppData.email
         val ordersRecyclerList: ArrayList<OrdersCard> = arrayListOf()
         mRecyclerView = binding.recyclerViewOrders
         mRecyclerView.setHasFixedSize(true)
@@ -63,22 +65,23 @@ class OrdersFragment : Fragment() {
         mRecyclerView.adapter = ordersAdapter
 
         db.collection("LaundryOrders")
-            .addSnapshotListener { snapshots, e ->
+            .whereEqualTo("email",email)
+            .addSnapshotListener { s, e ->
                 if (e != null) {
                     Log.e("ActivityFragment", "Loading Data Failed", e)
                     return@addSnapshotListener
                 }
 
-                if (snapshots == null || snapshots.isEmpty) {
+                if (s == null || s.isEmpty) {
                     Log.d("OrdersFragment", "Data is not available")
                     return@addSnapshotListener
                 }
 
-                Log.d("OrdersFragment", "Data is available with ${snapshots.size()} entries")
+                Log.d("OrdersFragment", "Data is available with ${s.size()} entries")
 
                 ordersRecyclerList.clear()
 
-                for (document in snapshots.documents) {
+                for (document in s.documents) {
                     val address = document.getString("address") ?: "N/A"
                     val selectLaundromat = document.getString("laundromat") ?: "N/A"
                     val speed = document.getString("speed") ?: "N/A"
