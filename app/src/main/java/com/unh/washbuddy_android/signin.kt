@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.databinding.ActivitySigninBinding
@@ -18,12 +19,15 @@ import com.unh.washbuddy_android.databinding.ActivitySignupBinding
 class signin : AppCompatActivity() {
 
     private lateinit var binding: ActivitySigninBinding
+    private lateinit var firebaseAuth: FirebaseAuth
     private val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        firebaseAuth = FirebaseAuth.getInstance()
 
         val newuser = findViewById<TextView>(R.id.newuser)
 
