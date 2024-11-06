@@ -49,55 +49,34 @@ class signin : AppCompatActivity() {
 
     }
 
-    private fun validateAppLogin(){
+    private fun validateAppLogin() {
         val email = binding.email.text.toString()
         val userpassword = binding.password.text.toString()
 
         // Checking wheather email and username is empty or not before clicking button
-        if(email.isEmpty() || userpassword.isEmpty()) {
+        if (email.isEmpty() || userpassword.isEmpty()) {
             Toast.makeText(this, "Please enter all the fields", Toast.LENGTH_SHORT).show()
             return
         }
 
         // Checking email is valid or not
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-        {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Enter valid email address", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // checking given email equals to database email
-        db.collection("UserCredentials")
-            .whereEqualTo("email",email)
-            .get()
-            .addOnSuccessListener { usercredentials ->
-                if(usercredentials.isEmpty)
-                {
-                    Toast.makeText(this, "Email does not exist, try register.", Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    val userDetails = usercredentials.firstOrNull()
-                    val password = userDetails?.getString("password")
-
-                    if(password == userpassword)
-                    {
-
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra("email", email)
-                        startActivity(intent)
-
-                        binding.email.setText("")
-                        binding.password.setText("")
-
-                    }
-                    else{
-                        Toast.makeText(this, "Password is incorrect.", Toast.LENGTH_SHORT).show()
-                    }
-
-                }
+        firebaseAuth.signInWithEmailAndPassword(email, userpassword).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("email", email)
+                startActivity(intent)
+            } else {
+                Toast.makeText(
+                    this,
+                    it.exception.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            .addOnFailureListener{ exception ->
-                Toast.makeText(this, "Please enter all the fields", Toast.LENGTH_SHORT).show()
-            }
+        }
     }
 }
