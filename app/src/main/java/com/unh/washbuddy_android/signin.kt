@@ -65,15 +65,24 @@ class signin : AppCompatActivity() {
             return
         }
 
-        firebaseAuth.signInWithEmailAndPassword(email, userpassword).addOnCompleteListener {
-            if (it.isSuccessful) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("email", email)
-                startActivity(intent)
+        firebaseAuth.signInWithEmailAndPassword(email, userpassword).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Check if the email is the admin email
+                if (email == "Admin@gmail.com") {
+                    val intent = Intent(this, AdminDashboard::class.java)
+                    intent.putExtra("email", email)
+                    startActivity(intent)
+                    Toast.makeText(this, "Welcome, Admin!", Toast.LENGTH_SHORT).show()
+                } else {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("email", email)
+                    startActivity(intent)
+                    Toast.makeText(this, "Welcome, User!", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(
                     this,
-                    it.exception.toString(),
+                    task.exception.toString(),
                     Toast.LENGTH_SHORT
                 ).show()
             }
