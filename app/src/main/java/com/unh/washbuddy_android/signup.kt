@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.unh.washbuddy_android.databinding.ActivitySignupBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,12 +22,16 @@ class signup : AppCompatActivity() {
     private var TAG = "WashBuddy-Android"
     private lateinit var firebaseAuth: FirebaseAuth
     private val db = Firebase.firestore
+    private var current_user: FirebaseUser? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.hide()
+
         firebaseAuth = FirebaseAuth.getInstance()
 
 
@@ -72,6 +77,7 @@ class signup : AppCompatActivity() {
                         firebaseAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener {
                                 if (it.isSuccessful) {
+                                    current_user = firebaseAuth.currentUser
                                     db.collection("UserCredentials")
                                         .whereEqualTo("email", email)
                                         .get()
@@ -89,6 +95,7 @@ class signup : AppCompatActivity() {
                                                     "Lastname" to lastname,
                                                     "Username" to username,
                                                     "email" to email,
+                                                    "useruid" to current_user!!.uid,
                                                 )
                                                 db.collection("UserCredentials")
                                                     .add(UserCredentials)
