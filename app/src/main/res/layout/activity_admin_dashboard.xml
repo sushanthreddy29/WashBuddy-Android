@@ -26,13 +26,28 @@
         android:layout_height="match_parent"
         android:id="@+id/recycler_view_admin"
         tools:listitem="@layout/cards_admin_layout"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="100dp"
         android:padding="10dp"
         android:clipToPadding="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/material_dynamic_tertiary70"
+        android:text="LOG OUT"
+        android:textColor="@color/black"
+        android:textSize="23dp"
+        android:textStyle="italic"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
