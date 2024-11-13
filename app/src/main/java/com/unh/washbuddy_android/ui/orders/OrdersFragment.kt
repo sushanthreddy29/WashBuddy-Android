@@ -14,6 +14,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.AppData
 import com.unh.washbuddy_android.databinding.FragmentOrdersBinding
+import com.unh.washbuddy_android.usersignin
 
 class OrdersFragment : Fragment() {
 
@@ -56,7 +57,7 @@ class OrdersFragment : Fragment() {
 
     private fun getDetailsFromDatabase() {
 
-        val email = AppData.email
+        val email = usersignin.email
         val ordersRecyclerList: ArrayList<OrdersCard> = arrayListOf()
         mRecyclerView = binding.recyclerViewOrders
         mRecyclerView.setHasFixedSize(true)
@@ -85,12 +86,17 @@ class OrdersFragment : Fragment() {
                     val address = document.getString("address") ?: "N/A"
                     val selectLaundromat = document.getString("laundromat") ?: "N/A"
                     val speed = document.getString("speed") ?: "N/A"
+                    val date = document.getString("pickupdate") ?: "N/A"
+                    val time = document.getString("pickuptime") ?: "N/A"
+                    val amount = document.getString("amount") ?: "$0.00"
 
                     ordersRecyclerList.add(
                         OrdersCard(
+                            "$date, $time",
                             "Pickup Address: $address",
                             "Laundromat: $selectLaundromat",
-                            "Delivery Speed: $speed"
+                            "Delivery Speed: $speed",
+                            amount
                         )
                     )
                 }
