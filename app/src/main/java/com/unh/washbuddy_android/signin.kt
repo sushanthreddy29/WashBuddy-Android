@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -27,6 +28,8 @@ class signin : AppCompatActivity() {
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         firebaseAuth = FirebaseAuth.getInstance()
 
         val newuser = findViewById<TextView>(R.id.newuser)
@@ -36,7 +39,7 @@ class signin : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val forgotpassword = findViewById<TextView>(R.id.forgotpassword)
+        val forgotpassword = findViewById<Button>(R.id.forgotpassword)
 
         forgotpassword.setOnClickListener{
             val intent = Intent(this, passwordreset::class.java)
@@ -68,12 +71,34 @@ class signin : AppCompatActivity() {
         firebaseAuth.signInWithEmailAndPassword(email, userpassword).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Check if the email is the admin email
-                if (email == "Admin@gmail.com") {
+
+                if (email == "Admin@gmail.com" || email == "admin@gmail.com") {
                     val intent = Intent(this, AdminDashboard::class.java)
                     intent.putExtra("email", email)
                     startActivity(intent)
                     Toast.makeText(this, "Welcome, Admin!", Toast.LENGTH_SHORT).show()
                 } else {
+                    val currentuser = firebaseAuth.currentUser
+                    if (currentuser != null) {
+                        usersignin.useruid = currentuser.uid
+                        Firebase.firestore.collection("UserCredentials")
+                            .get()
+                            .addOnSuccessListener {result ->
+                                for (users in result) {
+                                    val documentUserUID = users.getString("useruid")
+                                    if (usersignin.useruid == documentUserUID) {
+                                        usersignin.documentid =  users.id
+                                        usersignin.firstname = users.getString("Firstname")!!
+                                        usersignin.lastname = users.getString("Lastname")!!
+                                        usersignin.username = users.getString("Username")!!
+                                        usersignin.email = users.getString("email")!!
+                                    }
+                                }
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("LOGINERROR", "error", e)
+                            }
+                    }
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("email", email)
                     startActivity(intent)
