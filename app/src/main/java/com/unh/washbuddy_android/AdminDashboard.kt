@@ -1,5 +1,6 @@
 package com.unh.washbuddy_android
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.databinding.ActivityAdminDashboardBinding
@@ -25,6 +27,8 @@ class AdminDashboard : AppCompatActivity() {
         binding = ActivityAdminDashboardBinding.inflate(layoutInflater)  // Inflate the layout for the activity
         setContentView(binding.root)
 
+        supportActionBar?.title = "Admin Dashboard"
+
         // Initialize RecyclerView and Adapter
         mRecyclerView = binding.recyclerViewAdmin
         mRecyclerView.setHasFixedSize(true)
@@ -36,6 +40,19 @@ class AdminDashboard : AppCompatActivity() {
 
         // Fetch data from Firestore
         getDetailsFromDatabase()
+
+        binding.logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            usersignin.username = ""
+            usersignin.email = ""
+            usersignin.firstname = ""
+            usersignin.lastname = ""
+            usersignin.useruid = ""
+            usersignin.documentid = ""
+
+            val intent = Intent(this, signin::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {
@@ -71,12 +88,17 @@ class AdminDashboard : AppCompatActivity() {
                     val address = document.getString("address") ?: "N/A"
                     val selectLaundromat = document.getString("laundromat") ?: "N/A"
                     val email = document.getString("email") ?: "N/A"
+                    val date = document.getString("pickupdate") ?: "N/A"
+                    val time = document.getString("pickuptime") ?: "N/A"
+                    val amount = document.getString("amount") ?: "$0.00"
 
                     adminRecyclerList.add(
                         AdminCard(
+                            "$date, $time",
                             "User Email: $email",
                             "Pickup Address: $address",
-                            "Laundromat: $selectLaundromat"
+                            "Laundromat: $selectLaundromat",
+                            amount
                         )
                     )
                 }
