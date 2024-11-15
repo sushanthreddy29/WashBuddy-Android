@@ -2,9 +2,12 @@ package com.unh.washbuddy_android.ui.orders
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.unh.washbuddy_android.databinding.FragmentViewOrderBinding
 
 class ViewOrderFragment: Fragment() {
@@ -14,11 +17,17 @@ class ViewOrderFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
 
         _binding = FragmentViewOrderBinding.inflate(inflater, container, false)
+
+        (activity as? AppCompatActivity)?.supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = "Order Details"
+        }
 
         // Retrieve data passed through arguments
         val address = arguments?.getString("order_address") ?: "N/A"
@@ -46,6 +55,17 @@ class ViewOrderFragment: Fragment() {
         binding.totalAmountTextView.text = "Total Amount: $totalAmount"
 
         return binding.root
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp() // Handle back navigation
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {

@@ -39,9 +39,9 @@ class OrdersAdapter(
         val(date, time , address, laundry, delivery, amount, status) = mExampleList[position]
         val order = mExampleList[position]
         holder.mDateandTime.text = "$date, $time"
-        holder.mTextView1.text = address
-        holder.mTextView2.text = laundry
-        holder.mTextView3.text = delivery
+        holder.mTextView1.text = "Pickup Address: $address"
+        holder.mTextView2.text = "Laundromat: $laundry"
+        holder.mTextView3.text = "Delivery Speed: $delivery"
         holder.mAmount.text = amount
         holder.mStatus.text = status
 

@@ -89,18 +89,18 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
                     val time = document.getString("pickuptime") ?: "N/A"
                     val amount = document.getString("amount") ?: "$0.00"
                     val status = document.getString("status") ?: "N/A"
-                    val detergent = document.getString("status") ?: "N/A"
+                    val detergent = document.getString("detergent") ?: "N/A"
                     val smallbag = document.getString("smallbag") ?: "N/A"
                     val regularbag = document.getString("regularbag") ?: "N/A"
                     val extras = document.getString("extras") ?: "N/A"
 
                     ordersRecyclerList.add(
                         OrdersCard(
-                            "$date",
-                            "$time",
-                            "Pickup Address: $address",
-                            "Laundromat: $selectLaundromat",
-                            "Delivery Speed: $speed",
+                            date,
+                            time,
+                            address,
+                            selectLaundromat,
+                            speed,
                             amount,
                             status,
                             detergent,
