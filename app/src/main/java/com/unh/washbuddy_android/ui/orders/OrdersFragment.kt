@@ -140,6 +140,20 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
 
     override fun onReorderClick(order: OrdersCard) {
         // Handle the reorder action
+        val bundle = Bundle().apply {
+            putString("order_date", order.date)
+            putString("order_time", order.time)
+            putString("order_address", order.address)
+            putString("order_laundry", order.laundry)
+            putString("order_delivery", order.delivery)
+            putString("order_amount", order.amount)
+            putString("order_status", order.status)
+            putString("order_smallbag", order.smallbag)
+            putString("order_regularbag", order.regularbag)
+            putString("order_detergent", order.detergent)
+            putString("order_extras", order.extras)
+        }
+        findNavController().navigate(R.id.reorderFragment2, bundle)
         Log.d("OrdersFragment", "Reorder clicked for order: $order")
         // Implement reorder action here
     }
