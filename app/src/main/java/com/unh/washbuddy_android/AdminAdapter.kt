@@ -4,11 +4,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.unh.washbuddy_android.ui.orders.OrdersAdapter
-import com.unh.washbuddy_android.ui.orders.OrdersCard
-import com.unh.washbuddy_android.ui.orders.OrdersFragment
 
 class AdminAdapter (
     private val mExampleList: ArrayList<AdminCard>,
@@ -23,6 +21,7 @@ class AdminAdapter (
         val mTextView2: TextView = itemview.findViewById(R.id.text_view_2)
         val mTextView3: TextView = itemview.findViewById(R.id.text_view_3)
         val mAmount: TextView = itemview.findViewById(R.id.text_amount)
+        val mSubmitButton: Button = itemview.findViewById(R.id.button_view_order)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExampleViewHolder {
@@ -36,12 +35,13 @@ class AdminAdapter (
     }
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
-        val(datetime, text1, text2, text3, amount) = mExampleList[position]
-        holder.mDateandTime.text = datetime
-        holder.mTextView1.text = text1
-        holder.mTextView2.text = text2
-        holder.mTextView3.text = text3
+        val(date, time, email, address, selectLaundromat, amount) = mExampleList[position]
+        holder.mDateandTime.text = "$date, $time"
+        holder.mTextView1.text = "User Email: $email"
+        holder.mTextView2.text = "Pickup Address: $address"
+        holder.mTextView3.text = "Laundromat: $selectLaundromat"
         holder.mAmount.text = amount
+
 
         holder.itemView.setOnClickListener {
             Log.d("MYTEST", "Position $position")

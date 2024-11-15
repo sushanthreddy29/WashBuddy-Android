@@ -13,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.databinding.ActivityAdminDashboardBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AdminDashboard : AppCompatActivity() {
 
@@ -91,16 +93,36 @@ class AdminDashboard : AppCompatActivity() {
                     val date = document.getString("pickupdate") ?: "N/A"
                     val time = document.getString("pickuptime") ?: "N/A"
                     val amount = document.getString("amount") ?: "$0.00"
+                    val status = document.getString("status") ?: "N/A"
+                    val detergent = document.getString("detergent") ?: "N/A"
+                    val smallbag = document.getString("smallbag") ?: "N/A"
+                    val regularbag = document.getString("regularbag") ?: "N/A"
+                    val extras = document.getString("extras") ?: "N/A"
+                    val speed = document.getString("speed") ?: "N/A"
 
                     adminRecyclerList.add(
                         AdminCard(
-                            "$date, $time",
-                            "User Email: $email",
-                            "Pickup Address: $address",
-                            "Laundromat: $selectLaundromat",
-                            amount
+                            date,
+                            time,
+                            email,
+                            address,
+                            selectLaundromat,
+                            amount,
+                            speed,
+                            status,
+                            detergent,
+                            smallbag,
+                            regularbag,
+                            extras,
                         )
                     )
+                }
+                adminRecyclerList.sortByDescending { order ->
+                    try {
+                        SimpleDateFormat("MMM dd yyyy", Locale.getDefault()).parse(order.date)
+                    } catch (e: Exception) {
+                        null // Handle invalid date format
+                    }
                 }
                 Log.d(
                     "ActivityFragment",
