@@ -267,7 +267,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/enterstatus"
                 android:inputType="none"
-                app:simpleItems="@array/extra_field"
+                app:simpleItems="@array/order_status"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

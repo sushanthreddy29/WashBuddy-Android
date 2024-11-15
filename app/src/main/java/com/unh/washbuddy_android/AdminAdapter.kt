@@ -1,5 +1,6 @@
 package com.unh.washbuddy_android
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,12 +36,19 @@ class AdminAdapter (
     }
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
+        val adminCard = mExampleList[position]
         val(date, time, email, address, selectLaundromat, amount) = mExampleList[position]
         holder.mDateandTime.text = "$date, $time"
         holder.mTextView1.text = "User Email: $email"
         holder.mTextView2.text = "Pickup Address: $address"
         holder.mTextView3.text = "Laundromat: $selectLaundromat"
         holder.mAmount.text = amount
+
+        holder.mSubmitButton.setOnClickListener {
+            val intent = Intent(context, AdminViewOrder::class.java)
+            intent.putExtra("orderDetails", adminCard)
+            context.startActivity(intent)
+        }
 
 
         holder.itemView.setOnClickListener {

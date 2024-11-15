@@ -117,9 +117,9 @@ class AdminDashboard : AppCompatActivity() {
                         )
                     )
                 }
-                adminRecyclerList.sortByDescending { order ->
+                adminRecyclerList.sortBy { order ->
                     try {
-                        SimpleDateFormat("MMM dd yyyy", Locale.getDefault()).parse(order.date)
+                        SimpleDateFormat("MMM dd yyyy, h:mm a", Locale.getDefault()).parse("${order.date}, ${order.time}")
                     } catch (e: Exception) {
                         null // Handle invalid date format
                     }

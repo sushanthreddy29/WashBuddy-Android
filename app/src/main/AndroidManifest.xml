@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WashBuddyAndroid"
         tools:targetApi="31">
+        <activity android:name=".AdminViewOrder" />
+
         <activity
             android:name=".AdminDashboard"
             android:exported="false" />

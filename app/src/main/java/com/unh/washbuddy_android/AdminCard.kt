@@ -1,5 +1,7 @@
 package com.unh.washbuddy_android
 
+import java.io.Serializable
+
 data class AdminCard (
     val date: String,
     val time: String,
@@ -13,4 +15,4 @@ data class AdminCard (
     val smallbag: String,
     val regularbag: String,
     val extras: String
-)
+):Serializable
