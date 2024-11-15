@@ -67,6 +67,17 @@
             android:textSize="18sp"
             android:textStyle="bold|italic" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_view_order"
+            android:layout_below="@+id/text_amount"
+            android:layout_centerInParent="true"
+            android:text="View Order"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/material_dynamic_tertiary70"
+            />
+
 
     </RelativeLayout>
 
