@@ -15,6 +15,8 @@ import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.R
 import com.unh.washbuddy_android.databinding.FragmentOrdersBinding
 import com.unh.washbuddy_android.usersignin
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
 
@@ -110,6 +112,15 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
                         )
                     )
                 }
+
+                ordersRecyclerList.sortByDescending { order ->
+                    try {
+                        SimpleDateFormat("MMM dd yyyy", Locale.getDefault()).parse(order.date)
+                    } catch (e: Exception) {
+                        null // Handle invalid date format
+                    }
+                }
+
                 Log.d(
                     "ActivityFragment",
                     "RecyclerView updated with ${ordersRecyclerList.size} items"
