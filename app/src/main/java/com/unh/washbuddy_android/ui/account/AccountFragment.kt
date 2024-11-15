@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.unh.washbuddy_android.MainActivity
 import com.unh.washbuddy_android.databinding.FragmentAccountBinding
 import com.unh.washbuddy_android.signin
 import com.unh.washbuddy_android.usersignin
@@ -40,7 +38,9 @@ private var _binding: FragmentAccountBinding? = null
       val lastname = binding.lastname
       val username = binding.username
 
-    email.isEnabled = false
+    email.isFocusable = false
+    email.isFocusableInTouchMode = false
+
 
     email.setText(usersignin.email)
     firstname.setText(usersignin.firstname)

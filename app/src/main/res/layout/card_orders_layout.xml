@@ -56,10 +56,21 @@
             />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/status"
+            android:layout_below="@id/text_view_3"
+            android:text="Status"
+            android:textSize="18sp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/black"
+            />
+
+        <TextView
             android:id="@+id/text_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_3"
+            android:layout_below="@id/status"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:text="$0.00"
@@ -67,9 +78,37 @@
             android:textSize="18sp"
             android:textStyle="bold|italic" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_amount"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button_reorder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Reorder"
+                android:textColor="@color/black"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="@color/material_dynamic_tertiary70" />
+
+            <Button
+                android:id="@+id/button_view_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="View Order"
+                android:textColor="@color/black"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="@color/material_dynamic_tertiary70" />
+
+        </LinearLayout>
 
     </RelativeLayout>
-
-
 
 </androidx.cardview.widget.CardView>

@@ -1,3 +1,13 @@
 package com.unh.washbuddy_android.ui.orders
 
-data class OrdersCard(val dateandtime: String, val text1: String, val text2: String, val text3: String, val amount: String)
+data class OrdersCard(
+    val date: String,
+    val time: String,
+    val address: String,
+    val laundry: String,
+    val delivery: String,
+    val amount: String,
+    val status: String,
+    val detergent: String,
+    val smallbag: String,
+    val regularbag: String)

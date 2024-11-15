@@ -11,16 +11,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.AppData
-import com.unh.washbuddy_android.R
-import com.unh.washbuddy_android.databinding.FragmentHomeBinding
 import com.unh.washbuddy_android.databinding.FragmentNewOrder1Binding
-import com.unh.washbuddy_android.ui.orders.OrdersData
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -195,6 +191,7 @@ class NewOrder1Fragment : Fragment() {
         val smallbag = binding.smallbag.text.toString()
         val regularbag = binding.regularbag.text.toString()
         val extras = binding.enterextras.text.toString()
+        val status = "Pending"
 
         val amountText = binding.totalAmountTextView.text.toString()
         val amountWithDollar = amountText.substringAfter("Total Amount: ").trim()
@@ -212,6 +209,7 @@ class NewOrder1Fragment : Fragment() {
             "regularbag" to regularbag,
             "extras" to extras,
             "amount" to amountWithDollar,
+            "status" to status,
         )
 
         db.collection("LaundryOrders")

@@ -5,18 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.unh.washbuddy_android.AppData
 import com.unh.washbuddy_android.databinding.FragmentOrdersBinding
 import com.unh.washbuddy_android.usersignin
 
-class OrdersFragment : Fragment() {
+class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
 
     private var _binding: FragmentOrdersBinding? = null
 
@@ -32,8 +30,7 @@ class OrdersFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(OrdersViewModel::class.java)
+        val dashboardViewModel = ViewModelProvider(this).get(OrdersViewModel::class.java)
 
         _binding = FragmentOrdersBinding.inflate(inflater, container, false)
 
@@ -89,14 +86,23 @@ class OrdersFragment : Fragment() {
                     val date = document.getString("pickupdate") ?: "N/A"
                     val time = document.getString("pickuptime") ?: "N/A"
                     val amount = document.getString("amount") ?: "$0.00"
+                    val status = document.getString("status") ?: "N/A"
+                    val detergent = document.getString("status") ?: "N/A"
+                    val smallbag = document.getString("smallbag") ?: "N/A"
+                    val regularbag = document.getString("regularbag") ?: "N/A"
 
                     ordersRecyclerList.add(
                         OrdersCard(
-                            "$date, $time",
+                            "$date",
+                            "$time",
                             "Pickup Address: $address",
                             "Laundromat: $selectLaundromat",
                             "Delivery Speed: $speed",
-                            amount
+                            amount,
+                            status,
+                            detergent,
+                            smallbag,
+                            regularbag
                         )
                     )
                 }
@@ -108,4 +114,18 @@ class OrdersFragment : Fragment() {
 
             }
     }
+
+    override fun onViewOrderClick(order: OrdersCard) {
+        // Handle the view order action, e.g., navigate to a details fragment
+        Log.d("OrdersFragment", "View order clicked for order: $order")
+        // Implement navigation or other actions here
+    }
+
+    override fun onReorderClick(order: OrdersCard) {
+        // Handle the reorder action
+        Log.d("OrdersFragment", "Reorder clicked for order: $order")
+        // Implement reorder action here
+    }
+
 }
+
