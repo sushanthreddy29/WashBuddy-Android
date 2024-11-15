@@ -141,7 +141,6 @@ class NewOrder1Fragment : Fragment() {
             val formatter = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
 
             val tomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }
-
             val dayAfterTomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 2) }
 
             val itemsDay = arrayOf("${formatter.format(today.time)} (Today)", "${formatter.format(tomorrow.time)} (Tomorrow)",

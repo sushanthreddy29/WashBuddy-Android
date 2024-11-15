@@ -147,7 +147,6 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
             putString("order_laundry", order.laundry)
             putString("order_delivery", order.delivery)
             putString("order_amount", order.amount)
-            putString("order_status", order.status)
             putString("order_smallbag", order.smallbag)
             putString("order_regularbag", order.regularbag)
             putString("order_detergent", order.detergent)
