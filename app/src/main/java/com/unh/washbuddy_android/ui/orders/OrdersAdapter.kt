@@ -52,7 +52,7 @@ class OrdersAdapter(
         // Detect 'vieworder' button click
         holder.vieworder.setOnClickListener {
             listener.onViewOrderClick(order)
-            Toast.makeText(holder.itemView.context, "View Order button clicked for position $position", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(holder.itemView.context, "View Order button clicked for position $position", Toast.LENGTH_SHORT).show()
             // Handle view order action here
         }
 

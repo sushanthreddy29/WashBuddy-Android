@@ -134,7 +134,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
             putString("order_extras", order.extras)
         }
         findNavController().navigate(R.id.viewOrderFragment, bundle)
-        Log.d("OrdersFragment", "View order clicked for order: $order")
+        //Log.d("OrdersFragment", "View order clicked for order: $order")
         // Implement navigation or other actions here
     }
 
