@@ -10,4 +10,5 @@ data class OrdersCard(
     val status: String,
     val detergent: String,
     val smallbag: String,
-    val regularbag: String)
+    val regularbag: String,
+    val extras: String)

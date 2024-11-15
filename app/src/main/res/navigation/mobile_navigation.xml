@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_navigation_orders_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_orders_to_viewOrderFragment"
+            app:destination="@id/viewOrderFragment" />
     </fragment>
 
     <fragment
@@ -39,5 +42,13 @@
         <action
             android:id="@+id/action_newOrder1Fragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewOrderFragment"
+        android:name="com.unh.washbuddy_android.ui.orders.ViewOrderFragment"
+        android:label="ViewOrderFragment" >
+        <action
+            android:id="@+id/action_viewOrderFragment_to_navigation_orders"
+            app:destination="@id/navigation_orders" />
     </fragment>
 </navigation>

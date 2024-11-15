@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.unh.washbuddy_android.R
 import com.unh.washbuddy_android.databinding.FragmentOrdersBinding
 import com.unh.washbuddy_android.usersignin
 
@@ -90,6 +92,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
                     val detergent = document.getString("status") ?: "N/A"
                     val smallbag = document.getString("smallbag") ?: "N/A"
                     val regularbag = document.getString("regularbag") ?: "N/A"
+                    val extras = document.getString("extras") ?: "N/A"
 
                     ordersRecyclerList.add(
                         OrdersCard(
@@ -102,7 +105,8 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
                             status,
                             detergent,
                             smallbag,
-                            regularbag
+                            regularbag,
+                            extras
                         )
                     )
                 }
@@ -116,7 +120,20 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
     }
 
     override fun onViewOrderClick(order: OrdersCard) {
-        // Handle the view order action, e.g., navigate to a details fragment
+        val bundle = Bundle().apply {
+            putString("order_date", order.date)
+            putString("order_time", order.time)
+            putString("order_address", order.address)
+            putString("order_laundry", order.laundry)
+            putString("order_delivery", order.delivery)
+            putString("order_amount", order.amount)
+            putString("order_status", order.status)
+            putString("order_smallbag", order.smallbag)
+            putString("order_regularbag", order.regularbag)
+            putString("order_detergent", order.detergent)
+            putString("order_extras", order.extras)
+        }
+        findNavController().navigate(R.id.viewOrderFragment, bundle)
         Log.d("OrdersFragment", "View order clicked for order: $order")
         // Implement navigation or other actions here
     }

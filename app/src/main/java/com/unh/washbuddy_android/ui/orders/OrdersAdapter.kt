@@ -11,7 +11,7 @@ import com.unh.washbuddy_android.R
 
 class OrdersAdapter(
     private val mExampleList: ArrayList<OrdersCard>,
-    private val context: OrdersFragment
+    private val listener: OnOrderButtonClickListener
 ) : RecyclerView.Adapter<OrdersAdapter.ExampleViewHolder>() {
 
     class ExampleViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
@@ -37,6 +37,7 @@ class OrdersAdapter(
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
         val(date, time , address, laundry, delivery, amount, status) = mExampleList[position]
+        val order = mExampleList[position]
         holder.mDateandTime.text = "$date, $time"
         holder.mTextView1.text = address
         holder.mTextView2.text = laundry
@@ -50,12 +51,14 @@ class OrdersAdapter(
 
         // Detect 'vieworder' button click
         holder.vieworder.setOnClickListener {
+            listener.onViewOrderClick(order)
             Toast.makeText(holder.itemView.context, "View Order button clicked for position $position", Toast.LENGTH_SHORT).show()
             // Handle view order action here
         }
 
         // Detect 'reorder' button click
         holder.reorder.setOnClickListener {
+            listener.onReorderClick(order)
             Toast.makeText(holder.itemView.context, "Reorder button clicked for position $position", Toast.LENGTH_SHORT).show()
             // Handle reorder action here
         }
