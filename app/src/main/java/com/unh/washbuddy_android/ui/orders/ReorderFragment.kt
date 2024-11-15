@@ -20,6 +20,7 @@ import com.unh.washbuddy_android.ui.home.NewOrder1FragmentDirections
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.UUID
 
 class ReorderFragment: Fragment() {
 
@@ -176,6 +177,8 @@ class ReorderFragment: Fragment() {
         val regularbag = binding.regularbag.text.toString()
         val extras = binding.enterextras.text.toString()
         val status = "Pending"
+        val orderId = UUID.randomUUID().toString()
+
 
         val amountText = binding.totalAmountTextView.text.toString()
         val amountWithDollar = amountText.substringAfter("Total Amount: ").trim()
@@ -194,6 +197,7 @@ class ReorderFragment: Fragment() {
             "extras" to extras,
             "amount" to amountWithDollar,
             "status" to status,
+            "orderId" to orderId,
         )
 
         db.collection("LaundryOrders")
