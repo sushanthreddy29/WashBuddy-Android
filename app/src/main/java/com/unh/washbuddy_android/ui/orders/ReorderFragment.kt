@@ -1,16 +1,22 @@
 package com.unh.washbuddy_android.ui.orders
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.unh.washbuddy_android.AppData
 import com.unh.washbuddy_android.databinding.FragmentViewReorderBinding
+import com.unh.washbuddy_android.ui.home.NewOrder1FragmentDirections
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -129,9 +135,75 @@ class ReorderFragment: Fragment() {
         binding.smallbag.setOnItemClickListener { _, _, _, _ -> updateTotalAmount(charge) }
         binding.regularbag.setOnItemClickListener { _, _, _, _ -> updateTotalAmount(charge) }
 
+        binding.btncontinue2.setOnClickListener{
+            if (binding.enteraddress.text.toString()
+                    .isEmpty() || binding.enterpickupdate.text.toString()
+                    .isEmpty() || binding.enterpickuptime.text.toString()
+                    .isEmpty() || binding.enterlaundromat.text.toString()
+                    .isEmpty() || binding.enterdetergent.text.toString()
+                    .isEmpty() || binding.enterdelivery.text.toString()
+                    .isEmpty() || binding.smallbag.text.toString()
+                    .isEmpty() || binding.regularbag.text.toString()
+                    .isEmpty() || binding.enterextras.text.toString().isEmpty()
+            ) {
+                Toast.makeText(requireContext(), "Please enter all the fields", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                val action = ReorderFragmentDirections.actionReorderFragment2ToNavigationOrders()
+                findNavController().navigate(action)
+
+                saveLaundryDetailsToFirebase()
+            }
+        }
+
         updateTotalAmount(charge)
 
         return binding.root
+    }
+
+    private fun saveLaundryDetailsToFirebase() {
+        val db = Firebase.firestore
+
+        val email = AppData.email
+        val address = binding.enteraddress.text.toString()
+        val pickupdateorder = binding.enterpickupdate.text.toString()
+        val pickupdate = pickupdateorder.take(11)
+        val pickuptime = binding.enterpickuptime.text.toString()
+        val selectlaundromat = binding.enterlaundromat.text.toString()
+        val detergent = binding.enterdetergent.text.toString()
+        val speed = binding.enterdelivery.text.toString()
+        val smallbag = binding.smallbag.text.toString()
+        val regularbag = binding.regularbag.text.toString()
+        val extras = binding.enterextras.text.toString()
+        val status = "Pending"
+
+        val amountText = binding.totalAmountTextView.text.toString()
+        val amountWithDollar = amountText.substringAfter("Total Amount: ").trim()
+
+
+        val newOrder = hashMapOf(
+            "email" to email,
+            "address" to address,
+            "pickupdate" to pickupdate,
+            "pickuptime" to pickuptime,
+            "laundromat" to selectlaundromat,
+            "detergent" to detergent,
+            "speed" to speed,
+            "smallbag" to smallbag,
+            "regularbag" to regularbag,
+            "extras" to extras,
+            "amount" to amountWithDollar,
+            "status" to status,
+        )
+
+        db.collection("LaundryOrders")
+            .add(newOrder)
+            .addOnSuccessListener { documentReference ->
+                Log.d("DB", "DocumentSnapshot written successfully with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { exception ->
+                Log.w("DB", "Error adding document", exception)
+            }
     }
 
     fun isTimeBetween6PMAndMidnight(): Boolean {
