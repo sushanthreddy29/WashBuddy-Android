@@ -21,6 +21,7 @@ class AdminAdapter (
         val mTextView1: TextView = itemview.findViewById(R.id.text_view_1)
         val mTextView2: TextView = itemview.findViewById(R.id.text_view_2)
         val mTextView3: TextView = itemview.findViewById(R.id.text_view_3)
+        val mTextView4: TextView = itemview.findViewById(R.id.text_view_4)
         val mAmount: TextView = itemview.findViewById(R.id.text_amount)
         val mSubmitButton: Button = itemview.findViewById(R.id.button_view_order)
     }
@@ -37,11 +38,12 @@ class AdminAdapter (
 
     override fun onBindViewHolder(holder: ExampleViewHolder, position: Int) {
         val adminCard = mExampleList[position]
-        val(date, time, email, address, selectLaundromat, amount) = mExampleList[position]
+        val(date, time, email, address, selectLaundromat, status, amount) = mExampleList[position]
         holder.mDateandTime.text = "$date, $time"
         holder.mTextView1.text = "User Email: $email"
         holder.mTextView2.text = "Pickup Address: $address"
         holder.mTextView3.text = "Laundromat: $selectLaundromat"
+        holder.mTextView4.text = "Status: $status"
         holder.mAmount.text = amount
 
         holder.mSubmitButton.setOnClickListener {

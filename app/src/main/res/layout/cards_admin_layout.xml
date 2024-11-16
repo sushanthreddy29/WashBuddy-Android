@@ -56,10 +56,21 @@
             />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_view_4"
+            android:layout_below="@id/text_view_3"
+            android:text="Status:"
+            android:textSize="18sp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/black"
+            />
+
+        <TextView
             android:id="@+id/text_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_3"
+            android:layout_below="@id/text_view_4"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:text="$0.00"
