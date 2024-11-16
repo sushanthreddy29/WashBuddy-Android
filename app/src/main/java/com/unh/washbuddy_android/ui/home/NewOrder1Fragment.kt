@@ -103,25 +103,6 @@ class NewOrder1Fragment : Fragment() {
         binding.smallbag.setOnItemClickListener { _, _, _, _ -> updateTotalAmount(charge) }
         binding.regularbag.setOnItemClickListener { _, _, _, _ -> updateTotalAmount(charge) }
 
-        /*
-        val itemsTime = arrayOf("01:00 PM","01:30 PM","02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM", "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM")
-        val textFieldTime = binding.dropFieldTime
-        //textFieldTime.editText?.setText("03:00 PM")
-        (textFieldTime.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsTime)
-
-        val itemsDelivery = arrayOf("Standard", "Express")
-        val textFieldDelivery = binding.dropFieldDelivery
-        (textFieldDelivery.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsDelivery)
-
-        val itemSmallBag = arrayOf("0", "1", "2", "3", "4", "5")
-        val textfieldsmallbag = binding.dropFieldSmallBag
-        (textfieldsmallbag.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemSmallBag)
-
-        val itemRegularBag = arrayOf("0", "1", "2", "3", "4", "5")
-        val textfieldregularbag = binding.dropFieldRegularBag
-        (textfieldregularbag.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemRegularBag)
-        */
-
         if(isTimeBetween6PMAndMidnight()){
             val today = Calendar.getInstance()
             val formatter = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
