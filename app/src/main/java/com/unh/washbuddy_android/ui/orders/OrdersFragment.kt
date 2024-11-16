@@ -164,7 +164,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
             putString("order_extras", order.extras)
         }
         findNavController().navigate(R.id.reorderFragment2, bundle)
-        Log.d("OrdersFragment", "Reorder clicked for order: $order")
+        //Log.d("OrdersFragment", "Reorder clicked for order: $order")
         // Implement reorder action here
     }
 

@@ -45,9 +45,9 @@ class OrdersAdapter(
         holder.mAmount.text = amount
         holder.mStatus.text = status
 
-        holder.itemView.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "Item Position $position clicked", Toast.LENGTH_SHORT).show()
-        }
+        //holder.itemView.setOnClickListener {
+            //Toast.makeText(holder.itemView.context, "Item Position $position clicked", Toast.LENGTH_SHORT).show()
+        //}
 
         // Detect 'vieworder' button click
         holder.vieworder.setOnClickListener {
@@ -59,7 +59,7 @@ class OrdersAdapter(
         // Detect 'reorder' button click
         holder.reorder.setOnClickListener {
             listener.onReorderClick(order)
-            Toast.makeText(holder.itemView.context, "Reorder button clicked for position $position", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(holder.itemView.context, "Reorder button clicked for position $position", Toast.LENGTH_SHORT).show()
             // Handle reorder action here
         }
     }
