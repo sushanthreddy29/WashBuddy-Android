@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="simple_items">" "</string-array>
+    <string-array name="time">" "</string-array>
     <string-array name="extra_field">
         <item>"Basic"</item><item>"Premium"</item><item>"Premium+"</item>
-    </string-array>
-    <string-array name="time">
-        <item>"01:00 PM"</item>
-        <item>"01:30 PM"</item>
-        <item>"02:00 PM"</item>
-        <item>"02:30 PM"</item>
-        <item>"03:00 PM"</item>
-        <item>"03:30 PM"</item>
-        <item>"04:00 PM"</item>
-        <item>"04:30 PM"</item>
-        <item>"05:00 PM"</item>
-        <item>"05:30 PM"</item>
-        <item>"06:00 PM"</item>
     </string-array>
     <string-array name="delivery">
         <item>"Standard"</item><item>"Express"</item>

@@ -151,6 +151,8 @@ class NewOrder1Fragment : Fragment() {
             (textFieldDay.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsDay)
         }
 
+        updatePickupTimeOptions()
+
         binding.btncontinue2.setOnClickListener {
             if (binding.enteraddress.text.toString()
                     .isEmpty() || binding.enterpickupdate.text.toString()
@@ -232,6 +234,47 @@ class NewOrder1Fragment : Fragment() {
         // Check if time is between 6:00 PM (18:00) and 11:59 PM (23:59)
         return (currentHour in 18..23) || (currentHour == 23 && currentMinute == 59)
     }
+
+    private fun updatePickupTimeOptions() {
+        val currentTime = Calendar.getInstance()
+        val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
+
+        // Define all time slots
+        val timeSlots = arrayOf(
+            "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM",
+            "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM"
+        )
+
+        // Check if the current time is after 6:00 PM
+        val filteredTimeSlots = if (currentHour >= 18) {
+            // If after 6:00 PM, display all time slots
+            timeSlots
+        } else {
+            // Otherwise, filter time slots based on the current time
+            timeSlots.filter { timeSlot ->
+                val timeParts = timeSlot.split(":")
+                val hour = timeParts[0].toInt()
+                val minute = timeParts[1].substring(0, 2).toInt()
+                val isPM = timeSlot.contains("PM")
+
+                // Convert 12-hour format to 24-hour format
+                val adjustedHour = if (isPM && hour < 12) hour + 12 else hour
+
+                // Check if this time is after the current time
+                val timeCalendar = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, adjustedHour)
+                    set(Calendar.MINUTE, minute)
+                }
+                timeCalendar.after(currentTime)
+            }.toTypedArray() // Explicitly convert to an Array<String>
+        }
+
+        // Set the appropriate time slots in the dropdown menu
+        val textFieldTime = binding.dropFieldTime
+        (textFieldTime.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(filteredTimeSlots)
+
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
