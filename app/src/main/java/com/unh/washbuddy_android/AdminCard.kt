@@ -14,5 +14,6 @@ data class AdminCard (
     val detergent: String,
     val smallbag: String,
     val regularbag: String,
-    val extras: String
+    val extras: String,
+    val orderId: String
 ):Serializable
