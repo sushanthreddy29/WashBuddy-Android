@@ -14,8 +14,6 @@ class AdminAdapter (
     private val context: AdminDashboard
 ) : RecyclerView.Adapter<AdminAdapter.ExampleViewHolder>() {
 
-
-
     class ExampleViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
         val mDateandTime: TextView = itemview.findViewById(R.id.text_dateandtime)
         val mTextView1: TextView = itemview.findViewById(R.id.text_view_1)
