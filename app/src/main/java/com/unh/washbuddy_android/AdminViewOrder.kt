@@ -6,7 +6,6 @@ import android.view.MenuItem
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.databinding.AdminViewOrderBinding
@@ -68,7 +67,6 @@ class AdminViewOrder : AppCompatActivity() {
                         Firebase.firestore.collection("LaundryOrders")
                             .document(order.id)
                             .update(update_status)
-                        
                         Toast.makeText(this, "Order Status Updated", Toast.LENGTH_SHORT).show()
 
                     }
