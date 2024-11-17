@@ -60,4 +60,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth:23.1.0")
+    implementation("com.google.android.libraries.places:places:3.5.0")
 }
