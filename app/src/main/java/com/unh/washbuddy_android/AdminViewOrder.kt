@@ -46,6 +46,10 @@ class AdminViewOrder : AppCompatActivity() {
             currentOrderId = it.orderId
         }
 
+        if(binding.enterstatus.text.toString().trim() == "Completed"){
+            binding.enterstatus.setText("Completed")
+        }
+
         binding.submit.setOnClickListener {
             val order_status = binding.enterstatus.text.toString()
 
