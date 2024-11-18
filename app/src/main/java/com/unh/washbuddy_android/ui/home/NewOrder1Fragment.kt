@@ -179,7 +179,7 @@ class NewOrder1Fragment : Fragment() {
 
         binding.btncontinue2.setOnClickListener {
             if (binding.enteraddress.text.toString().isEmpty() ||
-                binding.enterpickupdate.text.toString().isEmpty() || 
+                binding.enterpickupdate.text.toString().isEmpty() ||
                 binding.enterpickuptime.text.toString().isEmpty() ||
                 binding.enterlaundromat.text.toString().isEmpty() ||
                 binding.enterdetergent.text.toString().isEmpty() ||
@@ -224,8 +224,7 @@ class NewOrder1Fragment : Fragment() {
             }
         }
     }
-
-
+    
     private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
