@@ -43,6 +43,7 @@ class NewOrder1Fragment : Fragment() {
     private var _binding: FragmentNewOrder1Binding? = null
     private val binding get() = _binding!!
     private var TAG = "WashBuddy-Android"
+    private lateinit var laundryAddress: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,8 +168,11 @@ class NewOrder1Fragment : Fragment() {
                 AppCompatActivity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
+
+                        val addressWithoutCountry = place.address?.substringBeforeLast(",")
+                        laundryAddress = addressWithoutCountry.toString()
                         binding.enterlaundromat.setText(place.name) // Update the TextView with the selected place
-                        Log.i(TAG, "Place selected: ${place.name}, ${place.address}")
+                        binding.enterlaundryaddress.setText(addressWithoutCountry)
                     }
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
@@ -261,6 +265,7 @@ class NewOrder1Fragment : Fragment() {
             "pickupdate" to pickupdate,
             "pickuptime" to pickuptime,
             "laundromat" to selectlaundromat,
+            "laundryaddress" to laundryAddress,
             "detergent" to detergent,
             "speed" to speed,
             "smallbag" to smallbag,
