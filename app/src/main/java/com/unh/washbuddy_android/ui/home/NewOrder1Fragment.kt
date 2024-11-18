@@ -1,5 +1,6 @@
 package com.unh.washbuddy_android.ui.home
 
+import android.content.pm.PackageManager
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -11,11 +12,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.AppData
+import com.unh.washbuddy_android.R
 import com.unh.washbuddy_android.databinding.FragmentNewOrder1Binding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -26,7 +34,7 @@ import java.util.UUID
 class NewOrder1Fragment : Fragment() {
 
     companion object {
-        fun newInstance() = NewOrder1Fragment()
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 
     private val viewModel: NewOrder1ViewModel by viewModels()
@@ -34,9 +42,16 @@ class NewOrder1Fragment : Fragment() {
     private var _binding: FragmentNewOrder1Binding? = null
     private val binding get() = _binding!!
     private var TAG = "WashBuddy-Android"
+    private lateinit var laundry: String
+
+    private lateinit var autocompleteFragment: AutocompleteSupportFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkLocationPermission()
+        if (!Places.isInitialized()) {
+            Places.initialize(requireContext(), "AIzaSyAT5rJfK25wi5_0V5qcyVTcRsoyTv4FbSQ")
+        }
     }
 
     override fun onCreateView(
@@ -56,6 +71,23 @@ class NewOrder1Fragment : Fragment() {
             title = "Place Order"
             setDisplayHomeAsUpEnabled(true)  // Enable the back arrow in the toolbar
         }
+
+        // Attempt to retrieve the AutocompleteSupportFragment safely
+        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.enterlaundryaddress) as AutocompleteSupportFragment
+
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS))
+
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // Handle the selected place
+                laundry = place.name
+                Log.i(TAG, "Place: " + place.name + ", " + place.id)
+            }
+
+            override fun onError(status: Status) {
+                Log.i(TAG, "An error occurred: $status")
+            }
+        })
 
         // Define prices for bags
         val smallBagPrice = 5
@@ -159,6 +191,42 @@ class NewOrder1Fragment : Fragment() {
         return binding.root
     }
 
+    private fun checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission is not granted, request for permission
+            requestLocationPermission()
+        } else {
+            // Permission already granted
+            // You can perform your functionality that requires this permission
+        }
+    }
+
+    private fun requestLocationPermission() {
+        requestPermissions(
+            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission was granted
+                    // You can perform your functionality that requires this permission
+                } else {
+                    // Permission denied
+                    // You can disable the functionality that depends on this permission or inform the user
+                }
+            }
+        }
+    }
+
 
     private fun saveLaundryDetailsToFirebase() {
         val db = Firebase.firestore
@@ -186,7 +254,7 @@ class NewOrder1Fragment : Fragment() {
             "address" to address,
             "pickupdate" to pickupdate,
             "pickuptime" to pickuptime,
-            "laundromat" to selectlaundromat,
+            "laundromat" to laundry,
             "detergent" to detergent,
             "speed" to speed,
             "smallbag" to smallbag,

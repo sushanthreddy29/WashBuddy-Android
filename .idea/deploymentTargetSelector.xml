@@ -15,10 +15,10 @@
       </SelectionState>
       <SelectionState runConfigName="MainActivity2">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-11-15T17:44:51.150569600Z">
+        <DropdownSelection timestamp="2024-11-18T01:06:28.052287500Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\susha\.android\avd\Medium_Phone_API_35.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=31130DLH2000X2" />
             </handle>
           </Target>
         </DropdownSelection>

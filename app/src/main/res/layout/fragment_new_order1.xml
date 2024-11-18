@@ -109,15 +109,15 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15sp"
             android:layout_marginRight="15sp"
             app:cardCornerRadius="10dp"
             >
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/enterlaundromat"
+            <fragment
+                android:id="@+id/enterlaundryaddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
@@ -138,6 +138,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/enterlaundromat"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
