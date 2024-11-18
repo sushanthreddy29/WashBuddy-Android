@@ -229,19 +229,26 @@ class NewOrder1Fragment : Fragment() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Permission is not granted, request for permission
-            requestLocationPermission()
+            // At least one of the permissions is not granted, request for permissions
+            requestLocationPermissions()
         } else {
-            // Permission already granted
-            // You can perform your functionality that requires this permission
+            // Both permissions are already granted
+            // You can perform your functionality that requires these permissions
         }
     }
 
-    private fun requestLocationPermission() {
+    private fun requestLocationPermissions() {
         requestPermissions(
-            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            arrayOf(
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
             LOCATION_PERMISSION_REQUEST_CODE
         )
     }
@@ -254,16 +261,19 @@ class NewOrder1Fragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission was granted
-                    // You can perform your functionality that requires this permission
+                if (grantResults.isNotEmpty() &&
+                    grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+                ) {
+                    // Both permissions were granted
+                    // You can perform your functionality that requires these permissions
                 } else {
-                    // Permission denied
-                    // You can disable the functionality that depends on this permission or inform the user
+                    // At least one of the permissions was denied
+                    // You can disable the functionality that depends on these permissions or inform the user
                 }
             }
         }
     }
+
 
 
     private fun saveLaundryDetailsToFirebase() {
