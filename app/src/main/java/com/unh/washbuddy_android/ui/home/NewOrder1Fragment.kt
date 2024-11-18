@@ -224,7 +224,7 @@ class NewOrder1Fragment : Fragment() {
             }
         }
     }
-    
+
     private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
