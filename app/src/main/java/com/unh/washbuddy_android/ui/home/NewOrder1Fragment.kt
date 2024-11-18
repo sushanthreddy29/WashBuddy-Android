@@ -1,5 +1,6 @@
 package com.unh.washbuddy_android.ui.home
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -14,16 +15,15 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.AppData
-import com.unh.washbuddy_android.R
 import com.unh.washbuddy_android.databinding.FragmentNewOrder1Binding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -34,6 +34,7 @@ import java.util.UUID
 class NewOrder1Fragment : Fragment() {
 
     companion object {
+        private const val AUTOCOMPLETE_REQUEST_CODE = 1001
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 
@@ -42,9 +43,6 @@ class NewOrder1Fragment : Fragment() {
     private var _binding: FragmentNewOrder1Binding? = null
     private val binding get() = _binding!!
     private var TAG = "WashBuddy-Android"
-    private lateinit var laundry: String
-
-    private lateinit var autocompleteFragment: AutocompleteSupportFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,22 +70,17 @@ class NewOrder1Fragment : Fragment() {
             setDisplayHomeAsUpEnabled(true)  // Enable the back arrow in the toolbar
         }
 
-        // Attempt to retrieve the AutocompleteSupportFragment safely
-        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.enterlaundryaddress) as AutocompleteSupportFragment
+        binding.enterlaundromat.setOnClickListener {
+            // Specify the fields to return after a place is selected.
+            val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
 
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS))
+            // Create the intent to launch the Autocomplete activity.
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+                .build(requireContext())
 
-        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-            override fun onPlaceSelected(place: Place) {
-                // Handle the selected place
-                laundry = place.name
-                Log.i(TAG, "Place: " + place.name + ", " + place.id)
-            }
-
-            override fun onError(status: Status) {
-                Log.i(TAG, "An error occurred: $status")
-            }
-        })
+            // Start the Autocomplete activity for a result.
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+        }
 
         // Define prices for bags
         val smallBagPrice = 5
@@ -104,7 +97,8 @@ class NewOrder1Fragment : Fragment() {
             val regularBagCount = binding.regularbag.text.toString().toIntOrNull() ?: 0
 
             // Calculate subtotal (Amount) with extra charge
-            val amount = (smallBagCount * smallBagPrice + regularBagCount * regularBagPrice + extraCharge).toFloat()
+            val amount =
+                (smallBagCount * smallBagPrice + regularBagCount * regularBagPrice + extraCharge).toFloat()
 
             // Calculate tax (6% of the amount)
             val tax = 0.06f * amount
@@ -135,7 +129,7 @@ class NewOrder1Fragment : Fragment() {
         binding.smallbag.setOnItemClickListener { _, _, _, _ -> updateTotalAmount(charge) }
         binding.regularbag.setOnItemClickListener { _, _, _, _ -> updateTotalAmount(charge) }
 
-        if(isTimeBetween6PMAndMidnight()){
+        if (isTimeBetween6PMAndMidnight()) {
             val today = Calendar.getInstance()
             val formatter = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
 
@@ -143,22 +137,39 @@ class NewOrder1Fragment : Fragment() {
             val dayAfterTomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 2) }
             val theNextDay = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 3) }
 
-            val itemsDay = arrayOf("${formatter.format(tomorrow.time)} (Tomorrow)",
-                "${formatter.format(dayAfterTomorrow.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(dayAfterTomorrow.time)})",
-                "${formatter.format(theNextDay.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(theNextDay.time)})"
+            val itemsDay = arrayOf(
+                "${formatter.format(tomorrow.time)} (Tomorrow)",
+                "${formatter.format(dayAfterTomorrow.time)} (${
+                    SimpleDateFormat(
+                        "EEEE",
+                        Locale.getDefault()
+                    ).format(dayAfterTomorrow.time)
+                })",
+                "${formatter.format(theNextDay.time)} (${
+                    SimpleDateFormat(
+                        "EEEE",
+                        Locale.getDefault()
+                    ).format(theNextDay.time)
+                })"
             )
             val textFieldDay = binding.dropFieldDate
             (textFieldDay.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsDay)
-        }
-        else{
+        } else {
             val today = Calendar.getInstance()
             val formatter = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
 
             val tomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }
             val dayAfterTomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 2) }
 
-            val itemsDay = arrayOf("${formatter.format(today.time)} (Today)", "${formatter.format(tomorrow.time)} (Tomorrow)",
-                "${formatter.format(dayAfterTomorrow.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(dayAfterTomorrow.time)})"
+            val itemsDay = arrayOf(
+                "${formatter.format(today.time)} (Today)",
+                "${formatter.format(tomorrow.time)} (Tomorrow)",
+                "${formatter.format(dayAfterTomorrow.time)} (${
+                    SimpleDateFormat(
+                        "EEEE",
+                        Locale.getDefault()
+                    ).format(dayAfterTomorrow.time)
+                })"
             )
             val textFieldDay = binding.dropFieldDate
             (textFieldDay.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsDay)
@@ -167,15 +178,15 @@ class NewOrder1Fragment : Fragment() {
         updatePickupTimeOptions()
 
         binding.btncontinue2.setOnClickListener {
-            if (binding.enteraddress.text.toString()
-                    .isEmpty() || binding.enterpickupdate.text.toString()
-                    .isEmpty() || binding.enterpickuptime.text.toString()
-                    .isEmpty() || binding.enterlaundromat.text.toString()
-                    .isEmpty() || binding.enterdetergent.text.toString()
-                    .isEmpty() || binding.enterdelivery.text.toString()
-                    .isEmpty() || binding.smallbag.text.toString()
-                    .isEmpty() || binding.regularbag.text.toString()
-                    .isEmpty() || binding.enterextras.text.toString().isEmpty()
+            if (binding.enteraddress.text.toString().isEmpty() ||
+                binding.enterpickupdate.text.toString().isEmpty() || 
+                binding.enterpickuptime.text.toString().isEmpty() ||
+                binding.enterlaundromat.text.toString().isEmpty() ||
+                binding.enterdetergent.text.toString().isEmpty() ||
+                binding.enterdelivery.text.toString().isEmpty() ||
+                binding.smallbag.text.toString().isEmpty() ||
+                binding.regularbag.text.toString().isEmpty() ||
+                binding.enterextras.text.toString().isEmpty()
             ) {
                 Toast.makeText(requireContext(), "Please enter all the fields", Toast.LENGTH_SHORT)
                     .show()
@@ -190,6 +201,30 @@ class NewOrder1Fragment : Fragment() {
 
         return binding.root
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                AppCompatActivity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        binding.enterlaundromat.setText(place.name) // Update the TextView with the selected place
+                        Log.i(TAG, "Place selected: ${place.name}, ${place.address}")
+                    }
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    val status = data?.let { Autocomplete.getStatusFromIntent(it) }
+                    Log.i(TAG, "An error occurred: ${status?.statusMessage}")
+                }
+                AppCompatActivity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                    Log.i(TAG, "Autocomplete canceled.")
+                }
+            }
+        }
+    }
+
 
     private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
@@ -212,7 +247,11 @@ class NewOrder1Fragment : Fragment() {
         )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
@@ -254,7 +293,7 @@ class NewOrder1Fragment : Fragment() {
             "address" to address,
             "pickupdate" to pickupdate,
             "pickuptime" to pickuptime,
-            "laundromat" to laundry,
+            "laundromat" to selectlaundromat,
             "detergent" to detergent,
             "speed" to speed,
             "smallbag" to smallbag,
@@ -332,6 +371,7 @@ class NewOrder1Fragment : Fragment() {
                 findNavController().navigateUp()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
