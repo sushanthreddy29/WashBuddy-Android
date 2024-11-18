@@ -95,6 +95,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
                     val smallbag = document.getString("smallbag") ?: "N/A"
                     val regularbag = document.getString("regularbag") ?: "N/A"
                     val extras = document.getString("extras") ?: "N/A"
+                    val laundryaddress = document.getString("laundryaddress") ?: "N/A"
 
                     ordersRecyclerList.add(
                         OrdersCard(
@@ -108,7 +109,8 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
                             detergent,
                             smallbag,
                             regularbag,
-                            extras
+                            extras,
+                            laundryaddress
                         )
                     )
                 }
@@ -143,6 +145,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
             putString("order_regularbag", order.regularbag)
             putString("order_detergent", order.detergent)
             putString("order_extras", order.extras)
+            putString("order_laundryaddress", order.laundryadress)
         }
         findNavController().navigate(R.id.viewOrderFragment, bundle)
         //Log.d("OrdersFragment", "View order clicked for order: $order")
@@ -162,6 +165,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
             putString("order_regularbag", order.regularbag)
             putString("order_detergent", order.detergent)
             putString("order_extras", order.extras)
+            putString("order_laundryaddress", order.laundryadress)
         }
         findNavController().navigate(R.id.reorderFragment2, bundle)
         //Log.d("OrdersFragment", "Reorder clicked for order: $order")

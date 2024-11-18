@@ -41,6 +41,7 @@ class ViewOrderFragment: Fragment() {
         val extras = arguments?.getString("order_extras") ?: "N/A"
         val totalAmount = arguments?.getString("order_amount") ?: "$0.00"
         val status = arguments?.getString("order_status") ?: "N/A"
+        val laundryaddress = arguments?.getString("order_laundryaddress") ?: "N/A"
 
 
         // Populate the UI
@@ -54,6 +55,7 @@ class ViewOrderFragment: Fragment() {
         binding.regularbag.setText(regularBag)
         binding.enterextras.setText(extras)
         binding.status.setText(status)
+        binding.enterlaundryaddress.setText(laundryaddress)
         binding.totalAmountTextView.text = "Total Amount: $totalAmount"
 
         return binding.root

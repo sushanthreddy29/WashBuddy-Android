@@ -52,10 +52,12 @@ class ReorderFragment: Fragment() {
         val regularBag = arguments?.getString("order_regularbag") ?: "N/A"
         val extras = arguments?.getString("order_extras") ?: "N/A"
         val totalAmount = arguments?.getString("order_amount") ?: "$0.00"
+        val laundryaddress = arguments?.getString("order_laundryaddress") ?: "N/A"
 
         binding.enteraddress.setText(address)
         (binding.dropFieldTime.editText as? AutoCompleteTextView)?.setText(time, false)
         binding.enterlaundromat.setText(laundromat)
+        binding.enterlaundryaddress.setText(laundryaddress)
         binding.enterdetergent.setText(detergent)
         (binding.dropFieldDelivery.editText as? AutoCompleteTextView)?.setText(deliverySpeed, false)
         (binding.dropFieldSmallBag.editText as? AutoCompleteTextView)?.setText(smallBag, false)
@@ -63,34 +65,9 @@ class ReorderFragment: Fragment() {
         (binding.dropFieldExtra.editText as? AutoCompleteTextView)?.setText(extras, false)
         binding.totalAmountTextView.text = "Total Amount: $totalAmount"
 
-        if(isTimeBetween6PMAndMidnight()){
-            val today = Calendar.getInstance()
-            val formatter = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
+        updatePickupDateOptions()
 
-            val tomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }
-            val dayAfterTomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 2) }
-            val theNextDay = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 3) }
-
-            val itemsDay = arrayOf("${formatter.format(tomorrow.time)} (Tomorrow)",
-                "${formatter.format(dayAfterTomorrow.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(dayAfterTomorrow.time)})",
-                "${formatter.format(theNextDay.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(theNextDay.time)})"
-            )
-            val textFieldDay = binding.dropFieldDate
-            (textFieldDay.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsDay)
-        }
-        else{
-            val today = Calendar.getInstance()
-            val formatter = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
-
-            val tomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }
-            val dayAfterTomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 2) }
-
-            val itemsDay = arrayOf("${formatter.format(today.time)} (Today)", "${formatter.format(tomorrow.time)} (Tomorrow)",
-                "${formatter.format(dayAfterTomorrow.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(dayAfterTomorrow.time)})"
-            )
-            val textFieldDay = binding.dropFieldDate
-            (textFieldDay.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsDay)
-        }
+        updatePickupTimeOptions()
 
         // Define prices for bags
         val smallBagPrice = 5
@@ -160,6 +137,77 @@ class ReorderFragment: Fragment() {
         updateTotalAmount(charge)
 
         return binding.root
+    }
+
+    private fun updatePickupDateOptions(){
+        if(isTimeBetween6PMAndMidnight()){
+            val today = Calendar.getInstance()
+            val formatter = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
+
+            val tomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }
+            val dayAfterTomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 2) }
+            val theNextDay = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 3) }
+
+            val itemsDay = arrayOf("${formatter.format(tomorrow.time)} (Tomorrow)",
+                "${formatter.format(dayAfterTomorrow.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(dayAfterTomorrow.time)})",
+                "${formatter.format(theNextDay.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(theNextDay.time)})"
+            )
+            val textFieldDay = binding.dropFieldDate
+            (textFieldDay.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsDay)
+        }
+        else{
+            val today = Calendar.getInstance()
+            val formatter = SimpleDateFormat("MMM dd yyyy", Locale.getDefault())
+
+            val tomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 1) }
+            val dayAfterTomorrow = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, 2) }
+
+            val itemsDay = arrayOf("${formatter.format(today.time)} (Today)", "${formatter.format(tomorrow.time)} (Tomorrow)",
+                "${formatter.format(dayAfterTomorrow.time)} (${SimpleDateFormat("EEEE", Locale.getDefault()).format(dayAfterTomorrow.time)})"
+            )
+            val textFieldDay = binding.dropFieldDate
+            (textFieldDay.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(itemsDay)
+        }
+    }
+
+    private fun updatePickupTimeOptions() {
+        val currentTime = Calendar.getInstance()
+        val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
+
+        // Define all time slots
+        val timeSlots = arrayOf(
+            "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM",
+            "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM"
+        )
+
+        // Check if the current time is after 6:00 PM
+        val filteredTimeSlots = if (currentHour >= 18) {
+            // If after 6:00 PM, display all time slots
+            timeSlots
+        } else {
+            // Otherwise, filter time slots based on the current time
+            timeSlots.filter { timeSlot ->
+                val timeParts = timeSlot.split(":")
+                val hour = timeParts[0].toInt()
+                val minute = timeParts[1].substring(0, 2).toInt()
+                val isPM = timeSlot.contains("PM")
+
+                // Convert 12-hour format to 24-hour format
+                val adjustedHour = if (isPM && hour < 12) hour + 12 else hour
+
+                // Check if this time is after the current time
+                val timeCalendar = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, adjustedHour)
+                    set(Calendar.MINUTE, minute)
+                }
+                timeCalendar.after(currentTime)
+            }.toTypedArray() // Explicitly convert to an Array<String>
+        }
+
+        // Set the appropriate time slots in the dropdown menu
+        val textFieldTime = binding.dropFieldTime
+        (textFieldTime.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(filteredTimeSlots)
+
     }
 
     private fun saveLaundryDetailsToFirebase() {
