@@ -118,6 +118,26 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="?attr/textInputOutlinedStyle"
+            android:id="@+id/outlinedTextField10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15sp"
+            android:layout_marginRight="15sp"
+            android:hint="Laundry Address">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/enterlaundryaddress"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="?attr/textInputOutlinedStyle"
             android:id="@+id/outlinedTextField4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

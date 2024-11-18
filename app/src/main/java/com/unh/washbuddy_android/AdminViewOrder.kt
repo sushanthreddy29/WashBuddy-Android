@@ -41,6 +41,7 @@ class AdminViewOrder : AppCompatActivity() {
             binding.smallbag.setText(it.smallbag)
             binding.regularbag.setText(it.regularbag)
             binding.enterextras.setText(it.extras)
+            binding.enterlaundryaddress.setText(it.laundryaddress)
             (binding.dropFieldStatus.editText as? AutoCompleteTextView)?.setText(it.status, false)
             binding.totalAmountTextView.text = "Total Amount: ${it.amount}"
             currentOrderId = it.orderId

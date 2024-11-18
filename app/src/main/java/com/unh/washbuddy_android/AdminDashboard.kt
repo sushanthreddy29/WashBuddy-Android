@@ -100,6 +100,7 @@ class AdminDashboard : AppCompatActivity() {
                     val extras = document.getString("extras") ?: "N/A"
                     val speed = document.getString("speed") ?: "N/A"
                     val orderId = document.getString("orderId") ?: "N/A"
+                    val laundryaddress = document.getString("laundryaddress") ?: "N/A"
 
                     adminRecyclerList.add(
                         AdminCard(
@@ -115,7 +116,8 @@ class AdminDashboard : AppCompatActivity() {
                             smallbag,
                             regularbag,
                             extras,
-                            orderId
+                            orderId,
+                            laundryaddress
                         )
                     )
                 }
