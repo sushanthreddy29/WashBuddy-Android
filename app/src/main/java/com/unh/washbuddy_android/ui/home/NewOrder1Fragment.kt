@@ -52,6 +52,7 @@ class NewOrder1Fragment : Fragment() {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -202,6 +203,7 @@ class NewOrder1Fragment : Fragment() {
         return binding.root
     }
 
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
@@ -243,6 +245,7 @@ class NewOrder1Fragment : Fragment() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun requestLocationPermissions() {
         requestPermissions(
             arrayOf(
@@ -253,6 +256,7 @@ class NewOrder1Fragment : Fragment() {
         )
     }
 
+    @Suppress("DEPRECATION")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
