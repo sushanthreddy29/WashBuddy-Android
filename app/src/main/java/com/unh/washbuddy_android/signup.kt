@@ -96,6 +96,7 @@ class signup : AppCompatActivity() {
                                                     "Username" to username,
                                                     "email" to email,
                                                     "useruid" to current_user!!.uid,
+                                                    "Fingerprintsignin" to false,
                                                 )
                                                 db.collection("UserCredentials")
                                                     .add(UserCredentials)

@@ -51,7 +51,12 @@ class signin : AppCompatActivity() {
         }
 
         binding.outlinedTextField1.setEndIconOnClickListener {
-            showFingerprintPrompt()
+            if(isFingerprintSignInEnabled()){
+                showFingerprintPrompt()
+            }
+            else{
+                Toast.makeText(this, "Biometric option not enabled", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.signin.setOnClickListener{
@@ -63,6 +68,14 @@ class signin : AppCompatActivity() {
         setupFingerprintAuthentication()
 
     }
+
+    private fun isFingerprintSignInEnabled(): Boolean {
+        val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+        Log.d("BIO", sharedPreferences.getBoolean("fingerprint_sign_in", false).toString())
+        return sharedPreferences.getBoolean("fingerprint_sign_in", false) // Default is false
+
+    }
+
 
     private fun setupFingerprintAuthentication() {
         val biometricManager = BiometricManager.from(this)
@@ -171,6 +184,12 @@ class signin : AppCompatActivity() {
                                         usersignin.lastname = users.getString("Lastname")!!
                                         usersignin.username = users.getString("Username")!!
                                         usersignin.email = users.getString("email")!!
+                                        usersignin.fingerprintsignin = users.getBoolean("Fingerprintsignin")!!
+                                        val biometric = usersignin.fingerprintsignin
+                                        val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+                                        val editor = sharedPreferences.edit()
+                                        editor.putBoolean("fingerprint_sign_in", biometric )
+                                        editor.apply()
                                     }
                                 }
                             }

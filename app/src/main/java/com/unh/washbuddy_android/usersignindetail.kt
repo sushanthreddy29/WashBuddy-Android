@@ -6,7 +6,8 @@ data class usersignindetail(
     var firstname: String,
     var lastname: String,
     var email: String,
-    var username: String
+    var username: String,
+    var fingerprintsignin: Boolean,
     )
 
-public var usersignin: usersignindetail = usersignindetail("", "", "", "", "", "")
+public var usersignin: usersignindetail = usersignindetail("", "", "", "", "", "", false)

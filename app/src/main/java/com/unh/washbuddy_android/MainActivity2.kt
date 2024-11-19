@@ -1,5 +1,6 @@
 package com.unh.washbuddy_android
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -74,7 +75,14 @@ class MainActivity2 : AppCompatActivity() {
                             usersignin.lastname = users.getString("Lastname")!!
                             usersignin.username = users.getString("Username")!!
                             usersignin.email = users.getString("email")!!
+                            usersignin.fingerprintsignin = users.getBoolean("Fingerprintsignin")!!
+                            val biometric = usersignin.fingerprintsignin
+                            Log.d("BIO", biometric.toString())
                             AppData.email = usersignin.email
+                            val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putBoolean("fingerprint_sign_in", biometric )
+                            editor.apply()
                         }
                     }
                 }
