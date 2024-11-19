@@ -27,7 +27,10 @@
         android:layout_marginTop="140dp"
         android:layout_marginLeft="25sp"
         android:layout_marginRight="25sp"
-        android:hint="Email">
+        android:hint="Email"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/baseline_fingerprint_24"
+        app:endIconContentDescription="fingerprint sign in">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

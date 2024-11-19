@@ -61,4 +61,6 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth:23.1.0")
     implementation("com.google.android.libraries.places:places:3.5.0")
+    implementation("androidx.biometric:biometric:1.2.0-alpha05")
+
 }

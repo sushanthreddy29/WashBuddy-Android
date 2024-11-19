@@ -1,5 +1,6 @@
 package com.unh.washbuddy_android
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -46,15 +50,88 @@ class signin : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.signin.setOnClickListener{
-            validateAppLogin()
+        binding.outlinedTextField1.setEndIconOnClickListener {
+            showFingerprintPrompt()
         }
+
+        binding.signin.setOnClickListener{
+            val email = binding.email.text.toString()
+            val userpassword = binding.password.text.toString()
+            validateAppLogin(email, userpassword)
+        }
+
+        setupFingerprintAuthentication()
 
     }
 
-    private fun validateAppLogin() {
-        val email = binding.email.text.toString()
-        val userpassword = binding.password.text.toString()
+    private fun setupFingerprintAuthentication() {
+        val biometricManager = BiometricManager.from(this)
+
+        when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                // Biometric hardware is available and ready
+                //showFingerprintPrompt()
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Toast.makeText(this, "No biometric hardware available", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Toast.makeText(this, "Biometric hardware unavailable", Toast.LENGTH_SHORT).show()
+            }
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                Toast.makeText(
+                    this,
+                    "No biometric data enrolled. Please enroll fingerprints in settings.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun showFingerprintPrompt() {
+        val executor = ContextCompat.getMainExecutor(this)
+
+        val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                Toast.makeText(this@signin, "Fingerprint Authentication Succeeded!", Toast.LENGTH_SHORT).show()
+                val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+                val savedEmail = sharedPreferences.getString("email", null)
+                val savedPassword = sharedPreferences.getString("password", null)
+                if (savedEmail != null && savedPassword != null) {
+                    validateAppLogin(savedEmail, savedPassword)
+                } // Call login logic after successful authentication
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Toast.makeText(this@signin, "Fingerprint Authentication Failed. Try again.", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Toast.makeText(this@signin, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric Authentication")
+            .setSubtitle("Authenticate using your fingerprint")
+            .setNegativeButtonText("Cancel")
+            .build()
+
+        biometricPrompt.authenticate(promptInfo)
+    }
+
+    private fun saveUserCredentials(email: String, password: String) {
+        val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("email", email)
+        editor.putString("password", password)
+        editor.apply()
+    }
+
+    private fun validateAppLogin(email: String, userpassword: String) {
 
         // Checking wheather email and username is empty or not before clicking button
         if (email.isEmpty() || userpassword.isEmpty()) {
@@ -71,6 +148,8 @@ class signin : AppCompatActivity() {
         firebaseAuth.signInWithEmailAndPassword(email, userpassword).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Check if the email is the admin email
+
+                saveUserCredentials(email, userpassword)
 
                 if (email == "Admin@gmail.com" || email == "admin@gmail.com") {
                     val intent = Intent(this, AdminDashboard::class.java)
