@@ -1,10 +1,12 @@
 package com.unh.washbuddy_android.ui.account
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -47,6 +49,13 @@ private var _binding: FragmentAccountBinding? = null
     lastname.setText(usersignin.lastname)
     username.setText(usersignin.username)
 
+    if (usersignin.fingerprintsignin == true){
+      (binding.dropFieldFingerprint.editText as? AutoCompleteTextView)?.setText("Enable", false)
+    }
+    else{
+      (binding.dropFieldFingerprint.editText as? AutoCompleteTextView)?.setText("Disable", false)
+    }
+
     binding.updateprofile.setOnClickListener {
       val builder = AlertDialog.Builder(requireContext())
       builder.setTitle("Confirm Update")
@@ -88,13 +97,28 @@ private var _binding: FragmentAccountBinding? = null
   }
 
   private fun updateuserprofile(firstname: String, lastname: String, username: String){
+    val fingerprintstatus: Boolean
+    if(binding.fingerprint.text.toString() == "Enable"){
+      fingerprintstatus = true
+      usersignin.fingerprintsignin = true
+    }
+    else{
+      fingerprintstatus = false
+      usersignin.fingerprintsignin = false
+    }
+
+    val sharedPreferences = requireContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putBoolean("fingerprint_sign_in", fingerprintstatus )
+    editor.apply()
 
     val userupdate = FirebaseFirestore.getInstance().collection("UserCredentials").document(usersignin.documentid)
 
     val updates = mapOf(
       "Firstname" to firstname,
       "Lastname" to lastname,
-      "Username" to username
+      "Username" to username,
+      "Fingerprintsignin" to fingerprintstatus
     )
     userupdate.update(updates)
       .addOnSuccessListener {

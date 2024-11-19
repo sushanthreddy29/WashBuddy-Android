@@ -91,6 +91,27 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25sp"
+        android:layout_marginRight="25sp"
+        android:id="@+id/dropFieldFingerprint"
+        android:hint="Fingerprint"
+        >
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fingerprint"
+            android:inputType="none"
+            app:simpleItems="@array/bio"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/updateprofile"
         android:layout_width="wrap_content"

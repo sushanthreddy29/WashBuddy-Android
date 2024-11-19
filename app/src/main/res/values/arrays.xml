@@ -8,6 +8,9 @@
     <string-array name="delivery">
         <item>"Standard"</item><item>"Express"</item>
     </string-array>
+    <string-array name="bio">
+        <item>"Enable"</item><item>"Disable"</item>
+    </string-array>
     <string-array name="order_status">
         <item>"Pending"</item><item>"Completed"</item>
     </string-array>
