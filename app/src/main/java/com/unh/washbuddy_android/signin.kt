@@ -201,6 +201,7 @@ class signin : AppCompatActivity() {
                     intent.putExtra("email", email)
                     startActivity(intent)
                     Toast.makeText(this, "Welcome, User!", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
             } else {
                 Toast.makeText(

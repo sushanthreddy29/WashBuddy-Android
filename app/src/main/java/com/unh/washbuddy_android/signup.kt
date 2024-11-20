@@ -115,6 +115,7 @@ class signup : AppCompatActivity() {
                                                     }
                                                 val intent = Intent(this, signin::class.java)
                                                 startActivity(intent)
+                                                finish()
                                             }
                                         }
 
