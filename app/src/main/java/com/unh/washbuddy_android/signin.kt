@@ -55,7 +55,7 @@ class signin : AppCompatActivity() {
                 showFingerprintPrompt()
             }
             else{
-                Toast.makeText(this, "Biometric option not enabled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Fingerprint signin is not enabled", Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -3,7 +3,7 @@
     <string-array name="simple_items">" "</string-array>
     <string-array name="time">" "</string-array>
     <string-array name="extra_field">
-        <item>"Basic"</item><item>"Premium"</item><item>"Premium+"</item>
+        <item>"Basic (Wash)"</item><item>"Premium (Wash, Dry)"</item><item>"Premium+ (Wash, Dry, Fold)"</item>
     </string-array>
     <string-array name="delivery">
         <item>"Standard"</item><item>"Express"</item>

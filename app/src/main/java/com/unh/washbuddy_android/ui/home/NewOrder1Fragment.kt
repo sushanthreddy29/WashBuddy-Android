@@ -254,6 +254,7 @@ class NewOrder1Fragment : Fragment() {
         val extras = binding.enterextras.text.toString()
         val status = "Pending"
         val orderId = UUID.randomUUID().toString()
+        val laundryaddress = binding.enterlaundryaddress.text.toString()
 
         val amountText = binding.totalAmountTextView.text.toString()
         val amountWithDollar = amountText.substringAfter("Total Amount: ").trim()
@@ -265,7 +266,7 @@ class NewOrder1Fragment : Fragment() {
             "pickupdate" to pickupdate,
             "pickuptime" to pickuptime,
             "laundromat" to selectlaundromat,
-            "laundryaddress" to laundryAddress,
+            "laundryaddress" to laundryaddress,
             "detergent" to detergent,
             "speed" to speed,
             "smallbag" to smallbag,
