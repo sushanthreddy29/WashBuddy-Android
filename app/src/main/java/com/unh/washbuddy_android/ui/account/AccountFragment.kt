@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.unh.washbuddy_android.AppData
@@ -30,10 +31,14 @@ private var _binding: FragmentAccountBinding? = null
     savedInstanceState: Bundle?
   ): View {
     val notificationsViewModel =
-            ViewModelProvider(this).get(AccountViewModel::class.java)
+      ViewModelProvider(this).get(AccountViewModel::class.java)
 
     _binding = FragmentAccountBinding.inflate(inflater, container, false)
-    val root: View = binding.root
+    return binding.root // Return the root view
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
 
       val email = binding.email
       val firstname = binding.firstname
@@ -93,9 +98,32 @@ private var _binding: FragmentAccountBinding? = null
 
       requireActivity().finishAffinity()
     }
-
-    return root
   }
+
+  override fun onResume() {
+    super.onResume()
+    loadData()
+  }
+
+  private fun loadData() {
+    // Set static data
+    binding.email.setText(AppData.email)
+    binding.firstname.setText(AppData.firstname)
+    binding.lastname.setText(AppData.lastname)
+    binding.username.setText(AppData.username)
+
+    val fingerprintOption = arrayOf("Enable", "Disable")
+    val fingerprintDrop = binding.dropFieldFingerprint
+    (fingerprintDrop.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(fingerprintOption)
+
+    // Set dropdown state
+    val autoCompleteTextView = binding.dropFieldFingerprint.editText as? AutoCompleteTextView
+    autoCompleteTextView?.setText(
+      if (AppData.fingerprintsignin == true) "Enable" else "Disable",
+      false
+    )
+  }
+
 
   //https://firebase.google.com/docs/firestore/manage-data/add-data
   private fun updateuserprofile(firstname: String, lastname: String, username: String){
