@@ -77,7 +77,6 @@ class signin : AppCompatActivity() {
 
     }
 
-
     private fun setupFingerprintAuthentication() {
         val biometricManager = BiometricManager.from(this)
 
@@ -119,6 +118,7 @@ class signin : AppCompatActivity() {
 
         })
 
+        //https://developer.android.com/identity/sign-in/biometric-auth
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle("Biometric Authentication")
             .setSubtitle("Authenticate using your fingerprint")
@@ -128,6 +128,7 @@ class signin : AppCompatActivity() {
         biometricPrompt.authenticate(promptInfo)
     }
 
+    //https://developer.android.com/training/data-storage/shared-preferences
     private fun saveUserCredentials(email: String, password: String) {
         val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -161,6 +162,8 @@ class signin : AppCompatActivity() {
             return
         }
 
+        //https://firebase.google.com/docs/auth/android/start
+        //https://firebase.google.com/docs/firestore/query-data/get-data
         firebaseAuth.signInWithEmailAndPassword(email, userpassword).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Check if the email is the admin email

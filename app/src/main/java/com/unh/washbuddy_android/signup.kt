@@ -27,7 +27,6 @@ class signup : AppCompatActivity() {
     private val db = Firebase.firestore
     private var current_user: FirebaseUser? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
@@ -99,7 +98,8 @@ class signup : AppCompatActivity() {
                 binding.confirmpasswordLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
             }
 
-
+            //https://firebase.google.com/docs/firestore/manage-data/add-data#kotlin+ktx_4
+            //https://firebase.google.com/docs/auth/android/password-auth
             if (firstname.isNotEmpty() && lastname.isNotEmpty() && username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmpassword.isNotEmpty() && password == confirmpassword) {
                 db.collection("UserCredentials")
                     .whereEqualTo("Username", username)
@@ -107,50 +107,51 @@ class signup : AppCompatActivity() {
                     .addOnSuccessListener { usercredentials ->
                         if (!usercredentials.isEmpty) {
                             Toast.makeText(this, "Username already exist, try login.", Toast.LENGTH_SHORT).show()
-                        }else{
-
-                        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    current_user = firebaseAuth.currentUser
-                                    db.collection("UserCredentials")
-                                        .whereEqualTo("email", email)
-                                        .get()
-                                        .addOnSuccessListener { usercredentials ->
-                                            if (!usercredentials.isEmpty) {
-                                                Toast.makeText(this, "Email already exist, try login.", Toast.LENGTH_SHORT).show()
-                                            } else {
-                                                val UserCredentials = hashMapOf(
-                                                    "Firstname" to firstname,
-                                                    "Lastname" to lastname,
-                                                    "Username" to username,
-                                                    "email" to email,
-                                                    "useruid" to current_user!!.uid,
-                                                    "Fingerprintsignin" to false,
-                                                )
-                                                db.collection("UserCredentials")
-                                                    .add(UserCredentials)
-                                                    .addOnSuccessListener { documentReference ->
-                                                        Log.d(TAG,"DocumentSnapshot written successfully with ID: ${documentReference.id}")
-                                                        val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
-                                                        val editor = sharedPreferences.edit()
-                                                        editor.putBoolean("fingerprint_sign_in", false )
-                                                        editor.apply()
-                                                    }
-                                                    .addOnFailureListener { exception ->
-                                                        Log.w(TAG, "Error adding document", exception)
-                                                    }
-                                                val intent = Intent(this, signin::class.java)
-                                                startActivity(intent)
-                                                finish()
+                        }
+                        else{
+                            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful) {
+                                        current_user = firebaseAuth.currentUser
+                                        db.collection("UserCredentials")
+                                            .whereEqualTo("email", email)
+                                            .get()
+                                            .addOnSuccessListener { usercredentials ->
+                                                if (!usercredentials.isEmpty) {
+                                                    Toast.makeText(this, "Email already exist, try login.", Toast.LENGTH_SHORT).show()
+                                                }
+                                                else {
+                                                    val UserCredentials = hashMapOf(
+                                                        "Firstname" to firstname,
+                                                        "Lastname" to lastname,
+                                                        "Username" to username,
+                                                        "email" to email,
+                                                        "useruid" to current_user!!.uid,
+                                                        "Fingerprintsignin" to false,
+                                                    )
+                                                    db.collection("UserCredentials")
+                                                        .add(UserCredentials)
+                                                        .addOnSuccessListener { documentReference ->
+                                                            Log.d(TAG,"DocumentSnapshot written successfully with ID: ${documentReference.id}")
+                                                            val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+                                                            val editor = sharedPreferences.edit()
+                                                            editor.putBoolean("fingerprint_sign_in", false )
+                                                            editor.apply()
+                                                        }
+                                                        .addOnFailureListener { exception ->
+                                                            Log.w(TAG, "Error adding document", exception)
+                                                        }
+                                                    val intent = Intent(this, signin::class.java)
+                                                    startActivity(intent)
+                                                    finish()
+                                                }
                                             }
-                                        }
 
 
-                                } else {
-                                    Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                                    }
                                 }
-                            }
                     }
                         }
             }
