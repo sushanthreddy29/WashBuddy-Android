@@ -72,10 +72,9 @@ private var _binding: FragmentAccountBinding? = null
         Toast.makeText(requireContext(),"Profile Updated",Toast.LENGTH_SHORT).show()
       }
       builder.setNegativeButton("No") { dialog, _ ->
-        dialog.cancel() // Close the dialog if user selects "No"
+        dialog.cancel()
       }
 
-      // Show the dialog
       val alertDialog = builder.create()
       alertDialog.show()
     }
@@ -98,6 +97,7 @@ private var _binding: FragmentAccountBinding? = null
     return root
   }
 
+  //https://firebase.google.com/docs/firestore/manage-data/add-data
   private fun updateuserprofile(firstname: String, lastname: String, username: String){
     val fingerprintstatus: Boolean
     if(binding.fingerprint.text.toString() == "Enable"){

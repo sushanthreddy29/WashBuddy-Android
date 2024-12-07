@@ -29,7 +29,6 @@ class ViewOrderFragment: Fragment() {
             title = "Order Details"
         }
 
-        // Retrieve data passed through arguments
         val address = arguments?.getString("order_address") ?: "N/A"
         val date = arguments?.getString("order_date") ?: "N/A"
         val time = arguments?.getString("order_time") ?: "N/A"
@@ -44,7 +43,6 @@ class ViewOrderFragment: Fragment() {
         val laundryaddress = arguments?.getString("order_laundryaddress") ?: "N/A"
 
 
-        // Populate the UI
         binding.enteraddress.setText(address)
         binding.enterpickupdate.setText(date)
         binding.enterpickuptime.setText(time)
@@ -65,7 +63,7 @@ class ViewOrderFragment: Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                findNavController().navigateUp() // Handle back navigation
+                findNavController().navigateUp()
                 true
             }
             else -> super.onOptionsItemSelected(item)

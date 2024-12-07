@@ -22,15 +22,13 @@ class AdminViewOrder : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.apply {
-            title = "View Order Details" // Optional: Set a title for the action bar
-            setDisplayHomeAsUpEnabled(true) // Enable the back button
+            title = "View Order Details"
+            setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
 
-        // Get the AdminCard object from Intent
         val orderDetails = intent.getSerializableExtra("orderDetails") as? AdminCard
 
-        // Populate fields with data
         orderDetails?.let {
             binding.enteraddress.setText(it.address)
             binding.enterpickupdate.setText(it.date)
@@ -84,8 +82,8 @@ class AdminViewOrder : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> { // Back button in the action bar
-                finish() // Close the current activity and go back
+            android.R.id.home -> {
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)

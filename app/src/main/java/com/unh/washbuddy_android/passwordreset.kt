@@ -26,6 +26,7 @@ class passwordreset : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //https://firebase.google.com/docs/auth/android/manage-users
         binding.resetpassword.setOnClickListener {
             val email = binding.email.text.toString().trim()
             if(email != ""){

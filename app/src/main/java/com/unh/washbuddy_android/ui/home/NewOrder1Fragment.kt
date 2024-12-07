@@ -49,7 +49,8 @@ class NewOrder1Fragment : Fragment() {
         super.onCreate(savedInstanceState)
         checkLocationPermission()
         if (!Places.isInitialized()) {
-            Places.initialize(requireContext(), "AIzaSyAT5rJfK25wi5_0V5qcyVTcRsoyTv4FbSQ")      //API key is restricted in the google cloud console, no exploitation threats
+            //API key is restricted in the google cloud console, no exploitation threats
+            Places.initialize(requireContext(), "AIzaSyAT5rJfK25wi5_0V5qcyVTcRsoyTv4FbSQ")
         }
     }
 
@@ -61,51 +62,41 @@ class NewOrder1Fragment : Fragment() {
         _binding = FragmentNewOrder1Binding.inflate(inflater, container, false)
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            // Perform any necessary actions before navigating back
-            findNavController().navigateUp()  // Navigate to the previous screen
+            findNavController().navigateUp()
         }
 
         setHasOptionsMenu(true)
 
         (activity as? AppCompatActivity)?.supportActionBar?.apply {
             title = "Place Order"
-            setDisplayHomeAsUpEnabled(true)  // Enable the back arrow in the toolbar
+            setDisplayHomeAsUpEnabled(true)
         }
 
         binding.enterlaundromat.setOnClickListener {
-            // Specify the fields to return after a place is selected.
             val fields = listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS)
 
-            // Create the intent to launch the Autocomplete activity.
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
                 .build(requireContext())
 
-            // Start the Autocomplete activity for a result.
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
 
-        // Define prices for bags
         val smallBagPrice = 5
         val regularBagPrice = 10
 
-        // Define prices for extra services
         val basicPrice = 0
         val premiumPrice = 3
         val premiumPlusPrice = 5
 
-        // Update total amount based on selected bag counts and extras
         fun updateTotalAmount(extraCharge: Int = 0) {
             val smallBagCount = binding.smallbag.text.toString().toIntOrNull() ?: 0
             val regularBagCount = binding.regularbag.text.toString().toIntOrNull() ?: 0
 
-            // Calculate subtotal (Amount) with extra charge
             val amount =
                 (smallBagCount * smallBagPrice + regularBagCount * regularBagPrice + extraCharge).toFloat()
 
-            // Calculate tax (6% of the amount)
             val tax = 0.06f * amount
 
-            // Calculate total amount
             val totalAmount = amount + tax
 
             // Update TextViews
@@ -238,6 +229,7 @@ class NewOrder1Fragment : Fragment() {
         }
     }
 
+    //https://firebase.google.com/docs/firestore/manage-data/add-data
     private fun saveLaundryDetailsToFirebase() {
         val db = Firebase.firestore
 
@@ -296,6 +288,7 @@ class NewOrder1Fragment : Fragment() {
         return (currentHour in 18..23) || (currentHour == 23 && currentMinute == 59)
     }
 
+    //https://developer.android.com/reference/com/google/android/material/textfield/MaterialAutoCompleteTextView#setSimpleItems(int%5B%5D)
     private fun updatePickupDateOptions(){
         if (isTimeBetween6PMAndMidnight()) {
             val today = Calendar.getInstance()
@@ -344,41 +337,35 @@ class NewOrder1Fragment : Fragment() {
         }
     }
 
+    //https://developer.android.com/reference/com/google/android/material/textfield/MaterialAutoCompleteTextView#setSimpleItems(int%5B%5D)
     private fun updatePickupTimeOptions() {
         val currentTime = Calendar.getInstance()
         val currentHour = currentTime.get(Calendar.HOUR_OF_DAY)
 
-        // Define all time slots
         val timeSlots = arrayOf(
             "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "03:30 PM",
             "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM"
         )
 
-        // Check if the current time is after 6:00 PM
         val filteredTimeSlots = if (currentHour >= 18) {
-            // If after 6:00 PM, display all time slots
             timeSlots
         } else {
-            // Otherwise, filter time slots based on the current time
             timeSlots.filter { timeSlot ->
                 val timeParts = timeSlot.split(":")
                 val hour = timeParts[0].toInt()
                 val minute = timeParts[1].substring(0, 2).toInt()
                 val isPM = timeSlot.contains("PM")
 
-                // Convert 12-hour format to 24-hour format
                 val adjustedHour = if (isPM && hour < 12) hour + 12 else hour
 
-                // Check if this time is after the current time
                 val timeCalendar = Calendar.getInstance().apply {
                     set(Calendar.HOUR_OF_DAY, adjustedHour)
                     set(Calendar.MINUTE, minute)
                 }
                 timeCalendar.after(currentTime)
-            }.toTypedArray() // Explicitly convert to an Array<String>
+            }.toTypedArray()
         }
 
-        // Set the appropriate time slots in the dropdown menu
         val textFieldTime = binding.dropFieldTime
         (textFieldTime.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(filteredTimeSlots)
 
@@ -388,7 +375,6 @@ class NewOrder1Fragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                // Handle back button click
                 findNavController().navigateUp()
                 true
             }

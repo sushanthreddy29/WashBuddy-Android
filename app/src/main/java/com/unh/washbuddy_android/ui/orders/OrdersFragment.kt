@@ -119,7 +119,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
                     try {
                         SimpleDateFormat("MMM dd yyyy, h:mm a", Locale.getDefault()).parse("${order.date}, ${order.time}")
                     } catch (e: Exception) {
-                        null // Handle invalid date format
+                        null
                     }
                 }
 
@@ -149,11 +149,9 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
         }
         findNavController().navigate(R.id.viewOrderFragment, bundle)
         //Log.d("OrdersFragment", "View order clicked for order: $order")
-        // Implement navigation or other actions here
     }
 
     override fun onReorderClick(order: OrdersCard) {
-        // Handle the reorder action
         val bundle = Bundle().apply {
             putString("order_date", order.date)
             putString("order_time", order.time)
@@ -169,7 +167,6 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
         }
         findNavController().navigate(R.id.reorderFragment2, bundle)
         //Log.d("OrdersFragment", "Reorder clicked for order: $order")
-        // Implement reorder action here
     }
 
 }

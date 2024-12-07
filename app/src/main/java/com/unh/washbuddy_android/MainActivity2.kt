@@ -55,6 +55,9 @@ class MainActivity2 : AppCompatActivity() {
         }
     }
 
+    //https://developer.android.com/reference/android/content/SharedPreferences
+    //https://firebase.google.com/docs/auth/android/start
+    //https://firebase.google.com/docs/firestore/query-data/get-data
     private fun checkUsersignin(): Boolean {
         val currentuser = FirebaseAuth.getInstance().currentUser
 
