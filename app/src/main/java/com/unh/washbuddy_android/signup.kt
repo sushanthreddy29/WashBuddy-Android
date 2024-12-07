@@ -1,6 +1,8 @@
 package com.unh.washbuddy_android
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -8,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -49,18 +52,55 @@ class signup : AppCompatActivity() {
             val password = binding.password.text.toString()
             val confirmpassword = binding.confirmpassword.text.toString()
 
+            binding.firstNameLayout.helperText = null
+            binding.lastNameLayout.helperText = null
+            binding.userNameLayout.helperText = null
+            binding.emailLayout.helperText = null
+            binding.passwordLayout.helperText = null
+            binding.confirmpasswordLayout.helperText = null
+
+
+            val redColor = ContextCompat.getColor(this, R.color.warning_color)
+
             if (firstname.isEmpty() || lastname.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
-                Toast.makeText(this, "Please enter all the fields", Toast.LENGTH_SHORT).show()
+                if (firstname.isEmpty()) {
+                    binding.firstNameLayout.helperText = "Enter your Firstname"
+                    binding.firstNameLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
+                }
+                if (lastname.isEmpty()) {
+                    binding.lastNameLayout.helperText = "Enter your Lastname"
+                    binding.lastNameLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
+                }
+                if (username.isEmpty()) {
+                    binding.userNameLayout.helperText = "Enter your Username"
+                    binding.userNameLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
+                }
+                if (email.isEmpty()) {
+                    binding.emailLayout.helperText = "Enter your Email Address"
+                    binding.emailLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
+                }
+                if (password.isEmpty()) {
+                    binding.passwordLayout.helperText = "Enter your Password"
+                    binding.passwordLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
+                }
+                if (confirmpassword.isEmpty()) {
+                    binding.confirmpasswordLayout.helperText = "Confirm your Password"
+                    binding.confirmpasswordLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
+                }
+            }
+
+            if (email.isNotEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.emailLayout.helperText = "Enter valid email address"
+                binding.emailLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
             }
 
             if (password != confirmpassword) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                binding.confirmpasswordLayout.helperText = "Passwords do not match"
+                binding.confirmpasswordLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
             }
 
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(this, "Enter valid email address", Toast.LENGTH_SHORT).show()
-            }
-            if (password == confirmpassword) {
+
+            if (firstname.isNotEmpty() && lastname.isNotEmpty() && username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmpassword.isNotEmpty() && password == confirmpassword) {
                 db.collection("UserCredentials")
                     .whereEqualTo("Username", username)
                     .get()
@@ -92,6 +132,10 @@ class signup : AppCompatActivity() {
                                                     .add(UserCredentials)
                                                     .addOnSuccessListener { documentReference ->
                                                         Log.d(TAG,"DocumentSnapshot written successfully with ID: ${documentReference.id}")
+                                                        val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+                                                        val editor = sharedPreferences.edit()
+                                                        editor.putBoolean("fingerprint_sign_in", false )
+                                                        editor.apply()
                                                     }
                                                     .addOnFailureListener { exception ->
                                                         Log.w(TAG, "Error adding document", exception)
