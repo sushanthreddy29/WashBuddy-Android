@@ -93,11 +93,7 @@ class signin : AppCompatActivity() {
                 Toast.makeText(this, "Biometric hardware unavailable", Toast.LENGTH_SHORT).show()
             }
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                Toast.makeText(
-                    this,
-                    "No biometric data enrolled. Please enroll fingerprints in settings.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "No biometric data enrolled. Please enroll fingerprints in settings.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -121,9 +117,6 @@ class signin : AppCompatActivity() {
                 Toast.makeText(this@signin, "Fingerprint Authentication Failed. Try again.", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                super.onAuthenticationError(errorCode, errString)
-            }
         })
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
@@ -214,11 +207,7 @@ class signin : AppCompatActivity() {
                     finish()
                 }
             } else {
-                Toast.makeText(
-                    this,
-                    task.exception.toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, task.exception.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
