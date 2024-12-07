@@ -1,161 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="User Registration"
-        android:textSize="30dp"
-        android:textColor="@color/black"
-        android:textStyle="bold|italic"
-        />
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputOutlinedStyle"
-        android:id="@+id/outlinedTextField1"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="25sp"
-        android:layout_marginRight="25sp"
-        android:hint="First Name">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@color/white">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/firstName"
+            android:layout_marginTop="40dp"
+            android:text="User Registration"
+            android:textSize="30dp"
+            android:textColor="@color/black"
+            android:textStyle="bold|italic"
             />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputOutlinedStyle"
-        android:id="@+id/outlinedTextField2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="25sp"
-        android:layout_marginRight="25sp"
-        android:hint="Last Name">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            style="?attr/textInputOutlinedStyle"
+            android:id="@+id/firstNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lastName"
-            />
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:hint="First Name">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/firstName"
+                />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputOutlinedStyle"
-        android:id="@+id/outlinedTextField3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="25sp"
-        android:layout_marginRight="25sp"
-        android:hint="User Name">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            style="?attr/textInputOutlinedStyle"
+            android:id="@+id/lastNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/userName"
-            />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:hint="Last Name">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lastName"
+                />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputOutlinedStyle"
-        android:id="@+id/outlinedTextField4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="25sp"
-        android:layout_marginRight="25sp"
-        android:hint="Email Address">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            style="?attr/textInputOutlinedStyle"
+            android:id="@+id/userNameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/email"
-            />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:hint="User Name">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/userName"
+                />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputOutlinedStyle"
-        android:id="@+id/outlinedTextField5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="25sp"
-        android:layout_marginRight="25sp"
-        app:endIconMode="password_toggle"
-        android:hint="Enter Your Password">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            style="?attr/textInputOutlinedStyle"
+            android:id="@+id/emailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:id="@+id/password"
-            />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            android:hint="Email Address">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/email"
+                />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="?attr/textInputOutlinedStyle"
-        android:id="@+id/outlinedTextField6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="25sp"
-        android:layout_marginRight="25sp"
-        app:endIconMode="password_toggle"
-        android:hint="Re-enter Your Password">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            style="?attr/textInputOutlinedStyle"
+            android:id="@+id/passwordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:id="@+id/confirmpassword"
-            />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            app:endIconMode="password_toggle"
+            android:hint="Enter Your Password">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:id="@+id/password"
+                />
 
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="200dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="@color/material_dynamic_tertiary70"
-        android:text="SIGN UP"
-        android:textColor="@color/black"
-        android:textSize="23dp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmpassword" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/backtosignin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Already have an account, Login here."
-        android:textSize="18dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/signup" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="?attr/textInputOutlinedStyle"
+            android:id="@+id/confirmpasswordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="25sp"
+            app:endIconMode="password_toggle"
+            android:hint="Re-enter Your Password">
 
-</LinearLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:id="@+id/confirmpassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/signup"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/material_dynamic_tertiary70"
+            android:text="SIGN UP"
+            android:textColor="@color/black"
+            android:textSize="23dp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmpassword" />
+
+        <TextView
+            android:id="@+id/backtosignin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="100dp"
+            android:text="Already have an account, Login here."
+            android:textSize="18dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/signup" />
+
+    </LinearLayout>
+
+</ScrollView>
+

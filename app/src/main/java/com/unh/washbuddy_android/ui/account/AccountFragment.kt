@@ -91,6 +91,8 @@ private var _binding: FragmentAccountBinding? = null
 
       val intent = Intent(requireContext(), signin::class.java)
       startActivity(intent)
+
+      requireActivity().finishAffinity()
     }
 
     return root
