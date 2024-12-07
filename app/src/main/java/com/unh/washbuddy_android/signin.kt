@@ -108,7 +108,6 @@ class signin : AppCompatActivity() {
         val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                Toast.makeText(this@signin, "Fingerprint Authentication Succeeded!", Toast.LENGTH_SHORT).show()
                 val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
                 val savedEmail = sharedPreferences.getString("email", null)
                 val savedPassword = sharedPreferences.getString("password", null)
@@ -124,7 +123,6 @@ class signin : AppCompatActivity() {
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                Toast.makeText(this@signin, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
             }
         })
 

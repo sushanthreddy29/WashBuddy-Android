@@ -35,13 +35,11 @@ class MainActivity2 : AppCompatActivity() {
                 val intent = Intent(this, AdminDashboard::class.java)
                 intent.putExtra("email", email)
                 startActivity(intent)
-                Toast.makeText(this, "Welcome, Admin!", Toast.LENGTH_SHORT).show()
                 finish()
             }
             else{
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                Toast.makeText(this, "Welcome, User!", Toast.LENGTH_SHORT).show()
                 finish()
             }
         }
