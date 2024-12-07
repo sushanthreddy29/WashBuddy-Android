@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WashBuddy-Android</string>
+    <string name="app_name">WashBuddy</string>
     <string name="title_home">Home</string>
     <string name="title_orders">Orders</string>
     <string name="title_account">Account</string>
