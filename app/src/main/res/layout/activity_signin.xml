@@ -21,7 +21,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="?attr/textInputOutlinedStyle"
-        android:id="@+id/outlinedTextField1"
+        android:id="@+id/emailLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
@@ -42,7 +42,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="?attr/textInputOutlinedStyle"
-        android:id="@+id/outlinedTextField2"
+        android:id="@+id/passwordLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

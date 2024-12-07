@@ -49,7 +49,7 @@ class NewOrder1Fragment : Fragment() {
         super.onCreate(savedInstanceState)
         checkLocationPermission()
         if (!Places.isInitialized()) {
-            Places.initialize(requireContext(), "AIzaSyAT5rJfK25wi5_0V5qcyVTcRsoyTv4FbSQ")
+            Places.initialize(requireContext(), "AIzaSyAT5rJfK25wi5_0V5qcyVTcRsoyTv4FbSQ")      //API key is restricted in the google cloud console, no exploitation threats
         }
     }
 

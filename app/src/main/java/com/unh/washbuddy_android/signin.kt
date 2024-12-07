@@ -2,6 +2,7 @@ package com.unh.washbuddy_android
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
@@ -50,7 +51,7 @@ class signin : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.outlinedTextField1.setEndIconOnClickListener {
+        binding.emailLayout.setEndIconOnClickListener {
             if(isFingerprintSignInEnabled()){
                 showFingerprintPrompt()
             }
@@ -146,15 +147,26 @@ class signin : AppCompatActivity() {
 
     private fun validateAppLogin(email: String, userpassword: String) {
 
+        val redColor = ContextCompat.getColor(this, R.color.warning_color)
+
         // Checking wheather email and username is empty or not before clicking button
         if (email.isEmpty() || userpassword.isEmpty()) {
-            Toast.makeText(this, "Please enter all the fields", Toast.LENGTH_SHORT).show()
+
+            if(email.isEmpty()){
+                binding.emailLayout.helperText = "Enter a valid email address"
+                binding.emailLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
+            }
+            if(userpassword.isEmpty()){
+                binding.passwordLayout.helperText = "Enter your password"
+                binding.passwordLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
+            }
             return
         }
 
         // Checking email is valid or not
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Enter valid email address", Toast.LENGTH_SHORT).show()
+            binding.emailLayout.helperText = "Enter a valid email address"
+            binding.emailLayout.setHelperTextColor(ColorStateList.valueOf(redColor))
             return
         }
 
