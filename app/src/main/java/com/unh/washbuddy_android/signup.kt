@@ -66,12 +66,7 @@ class signup : AppCompatActivity() {
                     .get()
                     .addOnSuccessListener { usercredentials ->
                         if (!usercredentials.isEmpty) {
-                            Toast.makeText(
-                                this,
-                                "Username already exist, try login.",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+                            Toast.makeText(this, "Username already exist, try login.", Toast.LENGTH_SHORT).show()
                         }else{
 
                         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -83,12 +78,7 @@ class signup : AppCompatActivity() {
                                         .get()
                                         .addOnSuccessListener { usercredentials ->
                                             if (!usercredentials.isEmpty) {
-                                                Toast.makeText(
-                                                    this,
-                                                    "Email already exist, try login.",
-                                                    Toast.LENGTH_SHORT
-                                                )
-                                                    .show()
+                                                Toast.makeText(this, "Email already exist, try login.", Toast.LENGTH_SHORT).show()
                                             } else {
                                                 val UserCredentials = hashMapOf(
                                                     "Firstname" to firstname,
@@ -101,17 +91,10 @@ class signup : AppCompatActivity() {
                                                 db.collection("UserCredentials")
                                                     .add(UserCredentials)
                                                     .addOnSuccessListener { documentReference ->
-                                                        Log.d(
-                                                            TAG,
-                                                            "DocumentSnapshot written successfully with ID: ${documentReference.id}"
-                                                        )
+                                                        Log.d(TAG,"DocumentSnapshot written successfully with ID: ${documentReference.id}")
                                                     }
                                                     .addOnFailureListener { exception ->
-                                                        Log.w(
-                                                            TAG,
-                                                            "Error adding document",
-                                                            exception
-                                                        )
+                                                        Log.w(TAG, "Error adding document", exception)
                                                     }
                                                 val intent = Intent(this, signin::class.java)
                                                 startActivity(intent)
@@ -121,11 +104,7 @@ class signup : AppCompatActivity() {
 
 
                                 } else {
-                                    Toast.makeText(
-                                        this,
-                                        it.exception.toString(),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
                                 }
                             }
                     }
