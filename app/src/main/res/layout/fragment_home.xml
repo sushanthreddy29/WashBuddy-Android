@@ -46,25 +46,6 @@
             android:layout_gravity="center"
             android:backgroundTint="@android:color/white" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnHelp"
-            android:layout_width="44dp"
-            android:layout_height="67dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="top|right"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@android:color/white"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|right"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:elevation="20dp"
-            app:srcCompat="@drawable/baseline_question_mark_24" />
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
