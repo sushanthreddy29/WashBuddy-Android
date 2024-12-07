@@ -180,27 +180,28 @@ class signin : AppCompatActivity() {
                     val intent = Intent(this, AdminDashboard::class.java)
                     intent.putExtra("email", email)
                     startActivity(intent)
-                    Toast.makeText(this, "Welcome, Admin!", Toast.LENGTH_SHORT).show()
                 } else {
                     val currentuser = firebaseAuth.currentUser
                     if (currentuser != null) {
-                        usersignin.useruid = currentuser.uid
+                        AppData.useruid = currentuser.uid
                         Firebase.firestore.collection("UserCredentials")
                             .get()
                             .addOnSuccessListener {result ->
                                 for (users in result) {
                                     val documentUserUID = users.getString("useruid")
-                                    if (usersignin.useruid == documentUserUID) {
-                                        usersignin.documentid =  users.id
-                                        usersignin.firstname = users.getString("Firstname")!!
-                                        usersignin.lastname = users.getString("Lastname")!!
-                                        usersignin.username = users.getString("Username")!!
-                                        usersignin.email = users.getString("email")!!
-                                        usersignin.fingerprintsignin = users.getBoolean("Fingerprintsignin")!!
-                                        val biometric = usersignin.fingerprintsignin
+                                    if (AppData.useruid == documentUserUID) {
+                                        AppData.documentid =  users.id
+                                        AppData.firstname = users.getString("Firstname")!!
+                                        AppData.lastname = users.getString("Lastname")!!
+                                        AppData.username = users.getString("Username")!!
+                                        AppData.email = users.getString("email")!!
+                                        AppData.fingerprintsignin = users.getBoolean("Fingerprintsignin")!!
+                                        val biometric = AppData.fingerprintsignin
                                         val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
                                         val editor = sharedPreferences.edit()
-                                        editor.putBoolean("fingerprint_sign_in", biometric )
+                                        if (biometric != null) {
+                                            editor.putBoolean("fingerprint_sign_in", biometric )
+                                        }
                                         editor.apply()
                                     }
                                 }
@@ -212,7 +213,6 @@ class signin : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("email", email)
                     startActivity(intent)
-                    Toast.makeText(this, "Welcome, User!", Toast.LENGTH_SHORT).show()
                     finish()
                 }
             } else {

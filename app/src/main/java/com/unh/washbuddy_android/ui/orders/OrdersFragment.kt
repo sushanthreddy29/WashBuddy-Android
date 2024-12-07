@@ -14,7 +14,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.R
 import com.unh.washbuddy_android.databinding.FragmentOrdersBinding
-import com.unh.washbuddy_android.usersignin
+import com.unh.washbuddy_android.AppData
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -58,7 +58,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
 
     private fun getDetailsFromDatabase() {
 
-        val email = usersignin.email
+        val email = AppData.email
         val ordersRecyclerList: ArrayList<OrdersCard> = arrayListOf()
         mRecyclerView = binding.recyclerViewOrders
         mRecyclerView.setHasFixedSize(true)

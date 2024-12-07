@@ -20,7 +20,9 @@ private lateinit var binding: ActivityMainBinding
      setContentView(binding.root)
 
         val email = intent.getStringExtra("email")
-        AppData.email = email
+        if (email != null) {
+            AppData.email = email
+        }
 
         val navView: BottomNavigationView = binding.navView
 

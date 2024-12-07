@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.unh.washbuddy_android.AppData
 import com.unh.washbuddy_android.databinding.FragmentAccountBinding
 import com.unh.washbuddy_android.signin
-import com.unh.washbuddy_android.usersignin
 
 class AccountFragment : Fragment() {
 
@@ -44,12 +44,12 @@ private var _binding: FragmentAccountBinding? = null
     email.isFocusableInTouchMode = false
 
 
-    email.setText(usersignin.email)
-    firstname.setText(usersignin.firstname)
-    lastname.setText(usersignin.lastname)
-    username.setText(usersignin.username)
+    email.setText(AppData.email)
+    firstname.setText(AppData.firstname)
+    lastname.setText(AppData.lastname)
+    username.setText(AppData.username)
 
-    if (usersignin.fingerprintsignin == true){
+    if (AppData.fingerprintsignin == true){
       (binding.dropFieldFingerprint.editText as? AutoCompleteTextView)?.setText("Enable", false)
     }
     else{
@@ -82,12 +82,12 @@ private var _binding: FragmentAccountBinding? = null
 
     binding.logout.setOnClickListener {
       FirebaseAuth.getInstance().signOut()
-      usersignin.username = ""
-      usersignin.email = ""
-      usersignin.firstname = ""
-      usersignin.lastname = ""
-      usersignin.useruid = ""
-      usersignin.documentid = ""
+      AppData.username = ""
+      AppData.email = ""
+      AppData.firstname = ""
+      AppData.lastname = ""
+      AppData.useruid = ""
+      AppData.documentid = ""
 
       val intent = Intent(requireContext(), signin::class.java)
       startActivity(intent)
@@ -100,11 +100,11 @@ private var _binding: FragmentAccountBinding? = null
     val fingerprintstatus: Boolean
     if(binding.fingerprint.text.toString() == "Enable"){
       fingerprintstatus = true
-      usersignin.fingerprintsignin = true
+      AppData.fingerprintsignin = true
     }
     else{
       fingerprintstatus = false
-      usersignin.fingerprintsignin = false
+      AppData.fingerprintsignin = false
     }
 
     val sharedPreferences = requireContext().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
@@ -112,7 +112,12 @@ private var _binding: FragmentAccountBinding? = null
     editor.putBoolean("fingerprint_sign_in", fingerprintstatus )
     editor.apply()
 
-    val userupdate = FirebaseFirestore.getInstance().collection("UserCredentials").document(usersignin.documentid)
+    val userupdate =
+      AppData.documentid?.let {
+        FirebaseFirestore.getInstance().collection("UserCredentials").document(
+          it
+        )
+      }
 
     val updates = mapOf(
       "Firstname" to firstname,
@@ -120,17 +125,19 @@ private var _binding: FragmentAccountBinding? = null
       "Username" to username,
       "Fingerprintsignin" to fingerprintstatus
     )
-    userupdate.update(updates)
-      .addOnSuccessListener {
-        usersignin.username = username
-        usersignin.firstname = firstname
-        usersignin.lastname = lastname
+    if (userupdate != null) {
+      userupdate.update(updates)
+        .addOnSuccessListener {
+          AppData.username = username
+          AppData.firstname = firstname
+          AppData.lastname = lastname
 
-        Toast.makeText(requireContext(),"Profile Updated",Toast.LENGTH_SHORT).show()
-      }
-      .addOnFailureListener {
-        Toast.makeText(requireContext(),"Failed to Update",Toast.LENGTH_SHORT).show()
-      }
+          Toast.makeText(requireContext(),"Profile Updated",Toast.LENGTH_SHORT).show()
+        }
+        .addOnFailureListener {
+          Toast.makeText(requireContext(),"Failed to Update",Toast.LENGTH_SHORT).show()
+        }
+    }
 
   }
 

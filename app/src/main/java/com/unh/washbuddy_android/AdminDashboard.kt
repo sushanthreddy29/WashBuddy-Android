@@ -3,10 +3,7 @@ package com.unh.washbuddy_android
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -45,12 +42,12 @@ class AdminDashboard : AppCompatActivity() {
 
         binding.logout.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            usersignin.username = ""
-            usersignin.email = ""
-            usersignin.firstname = ""
-            usersignin.lastname = ""
-            usersignin.useruid = ""
-            usersignin.documentid = ""
+            AppData.username = ""
+            AppData.email = ""
+            AppData.firstname = ""
+            AppData.lastname = ""
+            AppData.useruid = ""
+            AppData.documentid = ""
 
             val intent = Intent(this, signin::class.java)
             startActivity(intent)
