@@ -19,6 +19,9 @@ import com.unh.washbuddy_android.databinding.ActivitySignupBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+// Some parts of this code were generated with the assistance of ChatGPT by OpenAI.
+// This includes implementations related to [briefly describe the feature or functionality, e.g., "RecyclerView item click handling" or "Firebase data retrieval"].
+
 class signup : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
@@ -112,6 +115,18 @@ class signup : AppCompatActivity() {
                             firebaseAuth.createUserWithEmailAndPassword(email, password)
                                 .addOnCompleteListener {
                                     if (it.isSuccessful) {
+
+                                        val sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+                                        val editor = sharedPreferences.edit()
+                                        editor.putString("email", email)
+                                        editor.putString("password", password)
+                                        editor.apply()
+
+                                        val bioSharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE)
+                                        val bioEditor = bioSharedPreferences.edit()
+                                        bioEditor.putBoolean("fingerprint_sign_in", false)
+                                        bioEditor.apply()
+
                                         current_user = firebaseAuth.currentUser
                                         db.collection("UserCredentials")
                                             .whereEqualTo("email", email)
