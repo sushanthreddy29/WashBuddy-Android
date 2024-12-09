@@ -10,6 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.unh.washbuddy_android.databinding.FragmentHomeBinding
 
+// Some parts of this code were generated with the assistance of ChatGPT by OpenAI.
+// This includes implementations related to [briefly describe the feature or functionality, e.g., "RecyclerView item click handling" or "Firebase data retrieval"].
+
 class HomeFragment : Fragment() {
 
 private var _binding: FragmentHomeBinding? = null

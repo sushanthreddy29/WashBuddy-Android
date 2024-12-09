@@ -12,6 +12,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unh.washbuddy_android.AppData.email
 
+// Some parts of this code were generated with the assistance of ChatGPT by OpenAI.
+// This includes implementations related to [briefly describe the feature or functionality, e.g., "RecyclerView item click handling" or "Firebase data retrieval"].
 
 class MainActivity2 : AppCompatActivity() {
 

@@ -9,6 +9,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+// Some parts of this code were generated with the assistance of ChatGPT by OpenAI.
+// This includes implementations related to [briefly describe the feature or functionality, e.g., "RecyclerView item click handling" or "Firebase data retrieval"].
+
 class AdminAdapter (
     private val mExampleList: ArrayList<AdminCard>,
     private val context: AdminDashboard

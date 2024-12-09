@@ -18,6 +18,9 @@ import com.unh.washbuddy_android.AppData
 import com.unh.washbuddy_android.databinding.FragmentAccountBinding
 import com.unh.washbuddy_android.signin
 
+// Some parts of this code were generated with the assistance of ChatGPT by OpenAI.
+// This includes implementations related to [briefly describe the feature or functionality, e.g., "RecyclerView item click handling" or "Firebase data retrieval"].
+
 class AccountFragment : Fragment() {
 
 private var _binding: FragmentAccountBinding? = null

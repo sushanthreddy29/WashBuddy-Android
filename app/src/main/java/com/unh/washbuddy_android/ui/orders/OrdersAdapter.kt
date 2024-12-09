@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.unh.washbuddy_android.R
 
+// Some parts of this code were generated with the assistance of ChatGPT by OpenAI.
+// This includes implementations related to [briefly describe the feature or functionality, e.g., "RecyclerView item click handling" or "Firebase data retrieval"].
+
 class OrdersAdapter(
     private val mExampleList: ArrayList<OrdersCard>,
     private val listener: OnOrderButtonClickListener
