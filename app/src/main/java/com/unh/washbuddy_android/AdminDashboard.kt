@@ -62,6 +62,7 @@ class AdminDashboard : AppCompatActivity() {
         getDetailsFromDatabase()
     }
 
+    //https://firebase.google.com/docs/firestore/query-data/listen
     private fun getDetailsFromDatabase() {
         val adminRecyclerList: ArrayList<AdminCard> = arrayListOf()
         mRecyclerView = binding.recyclerViewAdmin

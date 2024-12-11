@@ -59,6 +59,7 @@ class OrdersFragment : Fragment(), OnOrderButtonClickListener  {
         _binding = null
     }
 
+    //https://firebase.google.com/docs/firestore/query-data/listen
     private fun getDetailsFromDatabase() {
 
         val email = AppData.email
