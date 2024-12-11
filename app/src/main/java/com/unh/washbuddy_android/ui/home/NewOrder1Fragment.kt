@@ -153,6 +153,7 @@ class NewOrder1Fragment : Fragment() {
         return binding.root
     }
 
+    //https://developers.google.com/maps/documentation/places/android-sdk/overview
     @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -180,6 +181,7 @@ class NewOrder1Fragment : Fragment() {
         }
     }
 
+    //https://developer.android.com/training/permissions/requesting
     private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -198,6 +200,7 @@ class NewOrder1Fragment : Fragment() {
         }
     }
 
+    //https://developer.android.com/training/permissions/requesting
     @Suppress("DEPRECATION")
     private fun requestLocationPermissions() {
         requestPermissions(
@@ -209,6 +212,7 @@ class NewOrder1Fragment : Fragment() {
         )
     }
 
+    //https://developer.android.com/training/permissions/requesting
     @Suppress("DEPRECATION")
     override fun onRequestPermissionsResult(
         requestCode: Int,
