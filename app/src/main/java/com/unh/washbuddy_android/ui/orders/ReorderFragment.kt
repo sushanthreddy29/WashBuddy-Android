@@ -221,6 +221,8 @@ class ReorderFragment: Fragment() {
         val extras = binding.enterextras.text.toString()
         val status = "Pending"
         val orderId = UUID.randomUUID().toString()
+        val laundryaddress = binding.enterlaundryaddress.text.toString()
+
 
 
         val amountText = binding.totalAmountTextView.text.toString()
@@ -233,6 +235,7 @@ class ReorderFragment: Fragment() {
             "pickupdate" to pickupdate,
             "pickuptime" to pickuptime,
             "laundromat" to selectlaundromat,
+            "laundryaddress" to laundryaddress,
             "detergent" to detergent,
             "speed" to speed,
             "smallbag" to smallbag,
