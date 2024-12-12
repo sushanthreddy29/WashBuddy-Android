@@ -24,9 +24,16 @@ class passwordreset : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        binding.backButton.setOnClickListener {
+            val intent = Intent(this@passwordreset,signin::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         val callback = this.onBackPressedDispatcher.addCallback(this){
             val intent = Intent(this@passwordreset,signin::class.java)
             startActivity(intent)
+            finish()
         }
 
         //https://firebase.google.com/docs/auth/android/manage-users
@@ -53,3 +60,4 @@ class passwordreset : AppCompatActivity() {
 
     }
 }
+
